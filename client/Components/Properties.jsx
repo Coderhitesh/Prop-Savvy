@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaBed, FaFilter, FaMapMarkerAlt, FaSearch, FaStar, FaTags } from 'react-icons/fa';
 
@@ -60,6 +61,7 @@ const Properties = () => {
 
       <div className="container mx-auto px-4 py-12">
         {/* Filter Section */}
+        {/* <Link href="/properties/slug"> */}
         <div className="mb-8">
           <button
             onClick={() => setShowFilters(!showFilters)}
@@ -121,7 +123,7 @@ const Properties = () => {
         {/* Properties Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map((property) => (
-            <div key={property.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <Link href='/properties/slugHJGJHGHJ' key={property.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative">
                 <img
                   src={property.image}
@@ -161,7 +163,7 @@ const Properties = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
