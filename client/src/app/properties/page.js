@@ -1,4 +1,4 @@
-import Properties from '@/Components/Properties'
+import Properties from '@/components/Properties'
 import React from 'react'
 
 const page = () => {
