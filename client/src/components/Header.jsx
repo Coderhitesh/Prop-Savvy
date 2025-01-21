@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Menu, X, Home, Building2, Phone, Users, Search } from 'lucide-react';
+import { Menu, X, Phone, } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 // import logo from '@//logo.jpg'
