@@ -51,8 +51,8 @@ function Header() {
                         <Link href="/properties" className="nav-link">
                             Properties
                         </Link>
-                        <Link href="/agents" className="nav-link">
-                            Our Agents
+                        <Link href="/blogs" className="nav-link">
+                            Blogs
                         </Link>
                         <Link href="/about-us" className="nav-link">
                             About Us

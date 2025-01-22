@@ -257,7 +257,7 @@ exports.deleteProperty = async (req, res) => {
             await deleteImageFromCloudinary(property.image.public_id)
         }
 
-        await property.remove();
+        await Property.findByIdAndDelete(id);
         res.status(200).json({
             success: true,
             message: 'Property is deleted'
@@ -310,7 +310,8 @@ exports.findPropertyBySlug = async (req, res) => {
     try {
         const slug = req.params.slug;
 
-        const property = await Property.findOne({ slug });
+        // Update query to search by 'slug' instead of '_id'
+        const property = await Property.findOne({ slug: slug });
         if (!property) {
             return res.status(404).json({
                 success: false,
@@ -323,8 +324,7 @@ exports.findPropertyBySlug = async (req, res) => {
             data: property
         });
 
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             success: false,
@@ -332,4 +332,4 @@ exports.findPropertyBySlug = async (req, res) => {
             error: error.message
         });
     }
-}
+};

@@ -38,27 +38,21 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Testimonial',
-    to: '/testimonial/all_testimonial',
-    icon: <CIcon icon={cilText} customClassName="nav-icon" />,
+    name: 'All Property',
+    to: '/property/all-property',
+    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
+  // {
+  //   component: CNavItem,
+  //   name: 'Testimonial',
+  //   to: '/testimonial/all_testimonial',
+  //   icon: <CIcon icon={cilText} customClassName="nav-icon" />,
+  // },
   {
     component: CNavItem,
     name: 'Blogs',
     to: '/blogs/all_blogs',
     icon: <CIcon icon={cilText} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'All User',
-    to: '/user/all_user',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'All Provider',
-    to: '/provider/all_provider',
-    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
 ]
 

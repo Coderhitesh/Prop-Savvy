@@ -105,7 +105,7 @@ const Testimonial = () => {
                       </div>
 
                       <div className="relative mb-6">
-                        <Quote className="absolute -top-4 -left-6 w-12 h-12 text-primary/10" />
+                        {/* <Quote className="absolute -top-4 -left-6 w-12 h-12 text-primary/10" /> */}
                         <p className="text-gray-700 text-xl leading-relaxed italic">
                           "{testimonial.content}"
                         </p>

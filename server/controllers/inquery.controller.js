@@ -65,7 +65,7 @@ exports.createInquery = async (req, res) => {
 exports.findAllInquerys = async (req, res) => {
     try {
         const inquerys = await Inquery.find();
-        if(inquerys.length === 0) {
+        if (inquerys.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: 'Inquerys not found'
@@ -82,5 +82,30 @@ exports.findAllInquerys = async (req, res) => {
             message: 'Internal Server Error',
             error: error.message
         });
+    }
+}
+
+exports.deleteInquery = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const findInquiry = await Inquery.findByIdAndDelete(id)
+        if (!findInquiry) {
+            return res.status(404).json({
+                success: false,
+                message: 'Inquery not found'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: 'Inquery is deleted'
+        })
+
+    } catch (error) {
+        console.log("Internal server error", error)
+        res.status(500).json({
+            success: false,
+            message: 'Internal sever error',
+            error: error.message
+        })
     }
 }

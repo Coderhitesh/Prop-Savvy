@@ -11,6 +11,9 @@ function AddBlogs() {
     const [formData, setFormData] = React.useState({
         title: '',
         content: '',
+        MetaTitle: '',
+        MetaDescription: '',
+        MetaKeywords: '',
     });
     const [smallImage, setSmallImage] = React.useState(null);
     const [largeImage, setLargeImage] = React.useState(null);
@@ -35,7 +38,7 @@ function AddBlogs() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.title || !formData.content || !smallImage || !largeImage) {
+        if (!formData.title || !formData.content || !formData.MetaTitle || !formData.MetaDescription || !formData.MetaKeywords || !smallImage || !largeImage) {
             toast.error('Please fill out all fields and upload both images.');
             return;
         }
@@ -43,12 +46,15 @@ function AddBlogs() {
         const payload = new FormData();
         payload.append('title', formData.title);
         payload.append('content', formData.content);
+        payload.append('MetaTitle', formData.MetaTitle);
+        payload.append('MetaDescription', formData.MetaDescription);
+        payload.append('MetaKeywords', formData.MetaKeywords);
         payload.append('image', smallImage);
         payload.append('largeImage', largeImage);
 
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:8000/api/v1/create-blog', payload, {
+            const res = await axios.post('http://localhost:8000/api/v1/create_blog', payload, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             toast.success(res.data.message);
@@ -56,6 +62,9 @@ function AddBlogs() {
             setFormData({
                 title: '',
                 content: '',
+                MetaTitle: '',
+                MetaDescription: '',
+                MetaKeywords: '',
             });
             setSmallImage(null);
             setLargeImage(null);
@@ -107,13 +116,46 @@ function AddBlogs() {
                             />
                         </CCol>
 
-                        <CCol md={12}>
+                        <CCol md={6}>
                             <CFormLabel htmlFor="title">Title</CFormLabel>
                             <CFormInput
                                 id="title"
                                 name="title"
                                 placeholder="Enter blog title"
                                 value={formData.title}
+                                onChange={handleChange}
+                            />
+                        </CCol>
+
+                        <CCol md={6}>
+                            <CFormLabel htmlFor="MetaTitle">Meta Title</CFormLabel>
+                            <CFormInput
+                                id="MetaTitle"
+                                name="MetaTitle"
+                                placeholder="Enter blog Meta Title"
+                                value={formData.MetaTitle}
+                                onChange={handleChange}
+                            />
+                        </CCol>
+
+                        <CCol md={6}>
+                            <CFormLabel htmlFor="MetaDescription">Meta Description</CFormLabel>
+                            <CFormInput
+                                id="MetaDescription"
+                                name="MetaDescription"
+                                placeholder="Enter blog Meta Description"
+                                value={formData.MetaDescription}
+                                onChange={handleChange}
+                            />
+                        </CCol>
+
+                        <CCol md={6}>
+                            <CFormLabel htmlFor="MetaKeywords">Meta Keywords</CFormLabel>
+                            <CFormInput
+                                id="MetaKeywords"
+                                name="MetaKeywords"
+                                placeholder="Enter blog Meta Keywords"
+                                value={formData.MetaKeywords}
                                 onChange={handleChange}
                             />
                         </CCol>

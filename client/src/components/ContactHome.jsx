@@ -1,21 +1,34 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Building2, Mail, MessageSquare, Phone, User } from 'lucide-react';
+import { Mail, MessageSquare, Phone, User } from 'lucide-react';
+import axios from 'axios'
+import toast from 'react-hot-toast';
 
 const ContactHome = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    propertyType: '',
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Handle form submission
-    console.log('Form submitted:', formData);
+    // console.log('Form submitted:', formData);
+    try {
+      const res = await axios.post('http://localhost:8000/api/v1/create_inquery',formData)
+      toast.success(res.data.message)
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      })
+    } catch (error) {
+      console.log("Internal server error",error)
+    }
   };
 
   const handleChange = (e) => {
@@ -79,23 +92,6 @@ const ContactHome = () => {
                     className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                     required
                   />
-                </div>
-
-                <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                  <select
-                    name="propertyType"
-                    value={formData.propertyType}
-                    onChange={handleChange}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none bg-white"
-                    required
-                  >
-                    <option value="">Property Type</option>
-                    <option value="residential">Residential</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="luxury">Luxury</option>
-                    <option value="investment">Investment</option>
-                  </select>
                 </div>
 
                 <div className="relative">

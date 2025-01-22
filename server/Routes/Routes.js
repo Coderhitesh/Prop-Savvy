@@ -6,6 +6,8 @@ const { createPropertyType, findAllPropertyTypes, findOnePropertyType, updatePro
 const { createHero, findAllHeros, findOneHero, updateHero, deleteHero, updateHeroStatus } = require('../controllers/hero.controller');
 const { createProperty, findAllProperties, findPropertyBySlug, findOneProperty, findPropertyByLocationAndPropertyType, updateProperty, deleteProperty } = require('../controllers/property.controller');
 const { createInquery, findAllInquerys } = require('../controllers/inquery.controller');
+const { getAllBlog, getSingleBlog, deleteBlog, updateBlog, createBlog, getBlogBySlug } = require('../controllers/blog.controller');
+const { createPropertyInquery, findAllPropertyInquirys } = require('../controllers/propertyInquery.controller');
 
 // Create a new location
 router.post('/create_location', createLocation);
@@ -33,7 +35,7 @@ router.post('/create_property', upload.single('image'), createProperty);
 router.get('/get_properties', findAllProperties);
 router.get('/get_property/:id', findOneProperty);
 router.get('/get_property', findPropertyByLocationAndPropertyType);
-router.get('/get_property/:slug', findPropertyBySlug);
+router.get('/get_property_slug/:slug', findPropertyBySlug);
 router.put('/update_property/:id', upload.single('image'), updateProperty);
 router.put('/update_hero_status/:id', updateHeroStatus);
 router.delete('/delete_property/:id', deleteProperty);
@@ -41,5 +43,17 @@ router.delete('/delete_property/:id', deleteProperty);
 // inquery routes here
 router.post('/create_inquery', createInquery);
 router.get('/get_inqueries', findAllInquerys);
+
+// blog routes here 
+router.post('/create_blog', upload.fields([{name: 'image', maxCount: 1}, {name: 'largeImage', maxCount: 1}]), createBlog);
+router.get('/get_blogs', getAllBlog);
+router.get('/get_blog/:id', getSingleBlog);
+router.put('/update_blog/:id', upload.fields([{name: 'image', maxCount: 1}, {name: 'largeImage', maxCount: 1}]), updateBlog);
+router.delete('/delete_blog/:id', deleteBlog);
+router.get('/get_blog_by_slug/:slug', getBlogBySlug);
+
+// property inquiry route here 
+router.post('/create_property_inquery',createPropertyInquery)
+router.get('/get_property_inquery',findAllPropertyInquirys)
 
 module.exports = router;

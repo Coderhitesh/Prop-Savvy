@@ -13,6 +13,9 @@ function EditBlogs() {
     const [formData, setFormData] = React.useState({
         title: '',
         content: '',
+        MetaTitle: '',
+        MetaDescription: '',
+        MetaKeywords: '',
     });
     const [smallImage, setSmallImage] = React.useState(null);
     const [largeImage, setLargeImage] = React.useState(null);
@@ -39,11 +42,14 @@ function EditBlogs() {
 
     const handleFetchBlog = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v1/get-single-blog/${id}`);
+            const { data } = await axios.get(`http://localhost:8000/api/v1/get_blog/${id}`);
             const allData = data.data;
             setFormData({
                 title: allData.title,
                 content: allData.content,
+                MetaTitle: allData.MetaTitle,
+                MetaDescription: allData.MetaDescription,
+                MetaKeywords: allData.MetaKeywords,
             });
             setSmallImage(allData.image.url);
             setLargeImage(allData.largeImage.url);
@@ -67,7 +73,7 @@ function EditBlogs() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.title || !formData.content || !smallImage || !largeImage) {
+        if (!formData.title || !formData.content || !formData.MetaTitle || !formData.MetaDescription || !formData.MetaKeywords || !smallImage || !largeImage) {
             toast.error('Please fill out all fields and upload both images.');
             return;
         }
@@ -75,12 +81,15 @@ function EditBlogs() {
         const payload = new FormData();
         payload.append('title', formData.title);
         payload.append('content', formData.content);
+        payload.append('MetaTitle', formData.MetaTitle);
+        payload.append('MetaDescription', formData.MetaDescription);
+        payload.append('MetaKeywords', formData.MetaKeywords);
         payload.append('image', smallImage);
         payload.append('largeImage', largeImage);
 
         setLoading(true);
         try {
-            const res = await axios.put(`http://localhost:8000/api/v1/update-blog/${id}`, payload, {
+            const res = await axios.put(`http://localhost:8000/api/v1/update_blog/${id}`, payload, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             toast.success(res.data.message);
@@ -119,7 +128,7 @@ function EditBlogs() {
                                     <img
                                         src={smallImagePreview}
                                         alt="Small Preview"
-                                        style={{ width: '150px', height:'150px', objectFit:'cover', borderRadius: '10px' }}
+                                        style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '10px' }}
                                     />
                                 </div>
                             )}
@@ -152,13 +161,46 @@ function EditBlogs() {
                         </CCol>
 
                         {/* Title Input */}
-                        <CCol md={12}>
+                        <CCol md={6}>
                             <CFormLabel className="form_label" htmlFor="title">Title</CFormLabel>
                             <CFormInput
                                 id="title"
                                 name="title"
                                 placeholder="Enter blog title"
                                 value={formData.title}
+                                onChange={handleChange}
+                            />
+                        </CCol>
+
+                        <CCol md={6}>
+                            <CFormLabel className="form_label" htmlFor="MetaTitle">Meta Title</CFormLabel>
+                            <CFormInput
+                                id="MetaTitle"
+                                name="MetaTitle"
+                                placeholder="Enter blog Meta Title"
+                                value={formData.MetaTitle}
+                                onChange={handleChange}
+                            />
+                        </CCol>
+
+                        <CCol md={6}>
+                            <CFormLabel className="form_label" htmlFor="MetaDescription">Meta Description</CFormLabel>
+                            <CFormInput
+                                id="MetaDescription"
+                                name="MetaDescription"
+                                placeholder="Enter blog Meta Description"
+                                value={formData.MetaDescription}
+                                onChange={handleChange}
+                            />
+                        </CCol>
+
+                        <CCol md={6}>
+                            <CFormLabel className="form_label" htmlFor="MetaKeywords">Meta Keywords</CFormLabel>
+                            <CFormInput
+                                id="MetaKeywords"
+                                name="MetaKeywords"
+                                placeholder="Enter blog Meta Keywords"
+                                value={formData.MetaKeywords}
                                 onChange={handleChange}
                             />
                         </CCol>

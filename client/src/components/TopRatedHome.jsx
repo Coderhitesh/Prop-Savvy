@@ -2,51 +2,24 @@
 
 import React, { useEffect, useState } from 'react';
 import { Building2, MapPin, Bed, Bath, ArrowRight, Star, Heart, Share2, Square } from 'lucide-react';
-
-const properties = [
-  {
-    id: 1,
-    title: "Luxury Beachfront Villa",
-    location: "Miami Beach, FL",
-    price: "2,500,000",
-    rating: 4.9,
-    reviews: 48,
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&q=80",
-    beds: 5,
-    baths: 4,
-    sqft: 4200,
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Modern Downtown Penthouse",
-    location: "Manhattan, NY",
-    price: "3,750,000",
-    rating: 4.8,
-    reviews: 36,
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&q=80",
-    beds: 4,
-    baths: 3.5,
-    sqft: 3800,
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Contemporary Hill Estate",
-    location: "Beverly Hills, CA",
-    price: "4,200,000",
-    rating: 4.9,
-    reviews: 52,
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&q=80",
-    beds: 6,
-    baths: 5,
-    sqft: 5500,
-    featured: true
-  }
-];
+import axios from 'axios'
+import Link from 'next/link';
 
 const TopRatedHome = () => {
   const [isClient, setIsClient] = useState(false);
+  const [properties,setProperties] = useState([])
+  const handleFetch = async() => {
+    try {
+      const res = await axios.get('http://localhost:8000/api/v1/get_properties')
+      setProperties(res.data.data)
+    } catch (error) {
+      console.log("Internal server error",error)
+    }
+  }
+
+  useEffect(()=>{
+    handleFetch()
+  },[])
 
   useEffect(() => {
     setIsClient(true);
@@ -76,23 +49,22 @@ const TopRatedHome = () => {
 
         {/* Properties Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.length>0 && properties.map((property,index) => (
+          {properties.length > 0 && properties.map((property,index) => (
             <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
-              {/* Image Container */}
               <div className="relative">
                 <img
-                  src={property.image}
-                  alt={property.title}
+                  src={property.image.url}
+                  alt={property?.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-4 right-4 flex gap-2">
+                {/* <div className="absolute top-4 right-4 flex gap-2">
                   <button className="p-2 bg-white/90 backdrop-blur-md rounded-full hover:bg-white transition-colors">
                     <Heart className="w-5 h-5 text-gray-600" />
                   </button>
                   <button className="p-2 bg-white/90 backdrop-blur-md rounded-full hover:bg-white transition-colors">
                     <Share2 className="w-5 h-5 text-gray-600" />
                   </button>
-                </div>
+                </div> */}
                 <div className="absolute bottom-4 left-4">
                   <div className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full">
                     <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -102,25 +74,23 @@ const TopRatedHome = () => {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{property.title}</h3>
+                   <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{property?.name}</h3>
                     <div className="flex items-center gap-2 text-gray-600">
                       <MapPin className="w-4 h-4" />
-                      <span>{property.location}</span>
+                      <span>{property?.location?.name}</span>
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-sm text-gray-600">Starting from</div>
-                    <div className="text-xl font-bold text-blue-600">${property.price}</div>
+                    <div className="text-xl font-bold text-blue-600">₹{property.startingPrice}</div>
                   </div>
                 </div>
 
-                {/* Property Features */}
                 <div className="grid grid-cols-3 gap-4 py-4 border-t border-gray-100">
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <Bed className="w-4 h-4 text-gray-400" />
                     <span className="text-gray-600">{property.beds} Beds</span>
                   </div>
@@ -131,14 +101,13 @@ const TopRatedHome = () => {
                   <div className="flex items-center gap-2">
                     <Square className="w-4 h-4 text-gray-400" />
                     <span className="text-gray-600">{property.sqft} sqft</span>
-                  </div>
+                  </div> */}
                 </div>
 
-                {/* CTA Button */}
-                <button className="w-full mt-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg inline-flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02]">
+                <Link href={`/properties/${property?.slug}`} className="w-full mt-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg inline-flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02]">
                   View Details
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
             </div>
           ))}

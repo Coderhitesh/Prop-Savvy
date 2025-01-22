@@ -1,7 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios'
 import {
   MapPin,
   Star,
@@ -15,8 +16,8 @@ import {
 
 function PropertyPage() {
   const { slug } = useParams();
-//   const [selectedImage, setSelectedImage] = useState(0);
-//   const [showInquiryForm, setShowInquiryForm] = useState(false);
+  //   const [selectedImage, setSelectedImage] = useState(0);
+  //   const [showInquiryForm, setShowInquiryForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,35 +25,27 @@ function PropertyPage() {
     message: "",
   });
 
-  const property = {
-    name: "Luxury Oceanfront Villa",
-    completeAddress: "123 Coastal Drive, Malibu, CA 90265",
-    startingPrice: 2500000,
-    description:
-      "Perched on the pristine coastline, this stunning oceanfront villa offers breathtaking views and luxurious living spaces. Features include a private beach access, infinity pool, and state-of-the-art smart home technology. This exclusive property combines modern luxury with natural beauty, creating an unparalleled living experience.",
-    image: {
-      url: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1600&h=900",
-    },
-    status: "For Sale",
-    isFeatured: true,
-    rating: 4.8,
-    propertyType: { name: "Luxury Villa" },
-    MetaTitle: "Luxury Oceanfront Villa | Premium Real Estate",
-    features: [
-      "6 Bedrooms",
-      "8 Bathrooms",
-      "10,000 sq ft",
-      "3 Car Garage",
-      "Private Pool",
-      "Ocean View",
-    ],
-  };
+  const [property, setProperty] = useState([])
 
-  const images = [
-    property.image.url,
-    "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&q=80&w=1600&h=900",
-    "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&q=80&w=1600&h=900",
-  ];
+  const fetchProperty = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:8000/api/v1/get_property_slug/${slug}`)
+      // console.log("data.data",data.data)
+      setProperty(data.data)
+    } catch (error) {
+      console.log("Internal server error", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchProperty();
+  }, [])
+
+  // const images = [
+  //   property.image.url,
+  //   "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&q=80&w=1600&h=900",
+  //   "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?auto=format&fit=crop&q=80&w=1600&h=900",
+  // ];
 
   const handleInputChange = (e) => {
     setFormData({
@@ -90,11 +83,13 @@ function PropertyPage() {
 
       {/* Hero Gallery */}
       <div className=" w-full h-auto max-h-[70vh] overflow-hidden">
-        <div className=" inset-0">
+        <div className=" inset-0 w-full">
           <img
-            src={images[0]}
-            alt={property.name}
+            src={property?.image?.url}
+            alt={property?.name}
             className="w-full h-full object-cover"
+            layout="fill"
+            objectFit="cover"
           />
         </div>
       </div>
@@ -108,20 +103,20 @@ function PropertyPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                  {property.status}
+                  {property?.status}
                 </span>
-                {property.isFeatured && (
+                {/* {property.isFeatured && (
                   <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium flex items-center gap-1">
                     <Award className="w-4 h-4" />
                     Featured
                   </span>
-                )}
+                )} */}
               </div>
 
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-4xl font-bold text-gray-900">
-                    {property.name}
+                    {property?.name}
                   </h1>
                   <div className="flex items-center gap-2 mt-2 text-gray-600">
                     <MapPin className="w-5 h-5" />
@@ -130,7 +125,7 @@ function PropertyPage() {
                 </div>
                 <div className="text-right">
                   <div className="text-3xl font-bold text-gray-900">
-                    ${property.startingPrice.toLocaleString()}
+                    ${property.startingPrice}
                   </div>
                   <div className="flex items-center gap-1 text-amber-500 justify-end mt-1">
                     <Star className="w-5 h-5 fill-current" />
@@ -142,7 +137,7 @@ function PropertyPage() {
 
             {/* Features Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 bg-white rounded-2xl shadow-sm">
-              {property.features.map((feature, idx) => (
+              {/* {property.features.map((feature, idx) => (
                 <div
                   key={idx}
                   className="flex items-center gap-3 p-3 rounded-xl bg-gray-50"
@@ -150,7 +145,7 @@ function PropertyPage() {
                   <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
                   <span className="text-gray-700 font-medium">{feature}</span>
                 </div>
-              ))}
+              ))} */}
             </div>
 
             {/* Description */}

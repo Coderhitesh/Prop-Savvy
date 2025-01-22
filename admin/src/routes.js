@@ -5,14 +5,15 @@ import EditTestimonial from './views/Testimonial/EditTestimonial'
 import AllBlogs from './views/Blogs/AllBlogs'
 import AddBlogs from './views/Blogs/AddBlogs'
 import EditBlogs from './views/Blogs/EditBlogs'
-import AllUser from './views/User/AllUser'
-import AllProvider from './views/Provider/AllProvider'
 import AllCity from './views/City/AllCity'
 import AddCity from './views/City/AddCity'
 import EditCity from './views/City/EditCity'
 import AddPropertyType from './views/PropertyType/AddPropertyType'
 import EditPropertyType from './views/PropertyType/EditPropertyType'
 import AllPropertyType from './views/PropertyType/AllPropertyType'
+import AddProperty from './views/Property/AddProperty'
+import EditProperty from './views/Property/EditProperty'
+import AllProperty from './views/Property/AllProperty'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -139,6 +140,12 @@ const routes = [
   { path: '/property-type/edit-property-type/:id', name: 'Edit Property Type', element: EditPropertyType },
   { path: '/property-type/all-property-type', name: 'All Property Type', element: AllPropertyType },
 
+  // location routes here 
+  { path: '/property', name: 'Property Type', element: Cards, exact: true },
+  { path: '/property/add-property', name: 'Add Property', element: AddProperty },
+  { path: '/property/edit-property/:id', name: 'Edit Property', element: EditProperty },
+  { path: '/property/all-property', name: 'All Property', element: AllProperty },
+
   // testimonial routes here 
   { path: '/testimonial', name: 'Testimonial', element: Cards, exact: true },
   { path: '/testimonial/add_testimonial', name: 'Add Testimonial', element: AddTestimonial },
@@ -151,16 +158,6 @@ const routes = [
   { path: '/blogs/all_blogs', name: 'All Blogs', element: AllBlogs },
   { path: '/blogs/edit_blogs/:id', name: 'Edit Blogs', element: EditBlogs },
 
-  // blogs routes here 
-  { path: '/user', name: 'Blogs', element: Cards, exact: true },
-  // { path: '/user/add_user', name: 'Add Blogs', element: AddBlogs },
-  { path: '/user/all_user', name: 'All Users', element: AllUser },
-  // { path: '/user/edit_user/:id', name: 'Edit Blogs', element: EditBlogs },
-
-  // provider routes here 
-  { path: '/provider', name: 'Provider', element: Cards, exact: true },
-  // { path: '/blogs/add_blogs', name: 'Add Blogs', element: AddBlogs },
-  { path: '/provider/all_provider', name: 'All Provider', element: AllProvider },
 ]
 
 export default routes
