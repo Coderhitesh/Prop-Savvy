@@ -3,7 +3,7 @@ const router = express.Router();
 const upload = require('../Middleware/Multer')
 const { createLocation, findAllLocations, updateLocation, findOneLocation, deleteLocation } = require('../controllers/location.controller');
 const { createPropertyType, findAllPropertyTypes, findOnePropertyType, updatePropertyType, deletePropertyType } = require('../controllers/propertyType.controller');
-const { createHero, findAllHeros, findOneHero, updateHero, deleteHero } = require('../controllers/hero.controller');
+const { createHero, findAllHeros, findOneHero, updateHero, deleteHero, updateHeroStatus } = require('../controllers/hero.controller');
 const { createProperty, findAllProperties, findPropertyBySlug, findOneProperty, findPropertyByLocationAndPropertyType, updateProperty, deleteProperty } = require('../controllers/property.controller');
 const { createInquery, findAllInquerys } = require('../controllers/inquery.controller');
 
@@ -35,6 +35,7 @@ router.get('/get_property/:id', findOneProperty);
 router.get('/get_property', findPropertyByLocationAndPropertyType);
 router.get('/get_property/:slug', findPropertyBySlug);
 router.put('/update_property/:id', upload.single('image'), updateProperty);
+router.put('/update_hero_status/:id', updateHeroStatus);
 router.delete('/delete_property/:id', deleteProperty);
 
 // inquery routes here

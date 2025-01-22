@@ -6,73 +6,68 @@ import {
     CPagination,
     CPaginationItem,
     CFormSwitch,
+    CNavLink,
 } from '@coreui/react';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
-function AllBanner() {
-    const [banners, setBanners] = React.useState([]);
+function AllHero() {
+    const [heroes, setHeroes] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 10;
 
-    // Fetch banners
-    const handleFetchBanner = async () => {
+    // Fetch heroes
+    const handleFetchHeroes = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('https://api.helpubuild.co.in/api/v1/get-all-banner');
-            setBanners(data.data);
+            const { data } = await axios.get('http://localhost:8000/api/v1/get_heroes');
+            setHeroes(data.data);
         } catch (error) {
-            console.log('Internal server error in getting banner', error);
+            console.log('Error fetching heroes:', error);
         } finally {
             setLoading(false);
         }
     };
 
-    // Update Active Status
-    const handleUpdateActive = async (id, currentStatus) => {
+    // Update status
+    const handleUpdateStatus = async (id, currentStatus) => {
         try {
-            // API call to update active status
             const updatedStatus = !currentStatus;
-            await axios.put(`https://api.helpubuild.co.in/api/v1/update-banner-status/${id}`, {
-                active: updatedStatus,
+            await axios.put(`http://localhost:8000/api/v1/update_hero_status/${id}`, {
+                status: updatedStatus,
             });
 
-            // Update the banners state
-            setBanners((prevBanners) =>
-                prevBanners.map((banner) =>
-                    banner._id === id ? { ...banner, active: updatedStatus } : banner
+            setHeroes((prevHeroes) =>
+                prevHeroes.map((hero) =>
+                    hero._id === id ? { ...hero, status: updatedStatus } : hero
                 )
             );
-            toast.success('Status updated successfully')
+            toast.success('Status updated successfully');
         } catch (error) {
-            console.log('Error updating active status:', error);
-            toast.error(error?.response?.data?.errors?.[0] || error?.response?.data?.message || "Please try again later")
+            console.log('Error updating status:', error);
+            toast.error(error?.response?.data?.message || 'Please try again later');
         }
     };
 
-    // Delete Banner
-    const handleDeleteBanner = async (id) => {
+    // Delete hero
+    const handleDeleteHero = async (id) => {
         try {
             setLoading(true);
-            await axios.delete(`https://api.helpubuild.co.in/api/v1/delete-banner/${id}`);
-            setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
-            toast.success('Banner deleted successfully');
+            await axios.delete(`http://localhost:8000/api/v1/delete_hero/${id}`);
+            setHeroes((prevHeroes) => prevHeroes.filter((hero) => hero._id !== id));
+            toast.success('Hero deleted successfully');
         } catch (error) {
-            console.log('Error deleting banner:', error);
-            toast.error(
-                error?.response?.data?.errors?.[0] ||
-                error?.response?.data?.message ||
-                'Please try again later'
-            );
+            console.log('Error deleting hero:', error);
+            toast.error(error?.response?.data?.message || 'Please try again later');
         } finally {
             setLoading(false);
         }
     };
 
-    // Confirm Delete
+    // Confirm delete
     const confirmDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -84,28 +79,25 @@ function AllBanner() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                handleDeleteBanner(id);
+                handleDeleteHero(id);
             }
         });
     };
 
     React.useEffect(() => {
-        handleFetchBanner();
+        handleFetchHeroes();
     }, []);
 
-    // Calculate paginated data
+    // Pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = banners.slice(startIndex, startIndex + itemsPerPage);
+    const currentData = heroes.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(heroes.length / itemsPerPage);
 
-    // Calculate total pages
-    const totalPages = Math.ceil(banners.length / itemsPerPage);
-
-    // Handle page change
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const heading = ['S.No', 'Banner Image', 'View In', 'Active', 'Action'];
+    const heading = ['S.No', 'Title', 'Description', 'Image', 'Status', 'Action'];
 
     return (
         <>
@@ -115,8 +107,8 @@ function AllBanner() {
                 </div>
             ) : (
                 <Table
-                    heading="All Banner"
-                    btnText="Add Banner"
+                    heading="All Heroes"
+                    btnText="Add Hero"
                     btnURL="/banner/add-banner"
                     tableHeading={heading}
                     tableContent={
@@ -124,24 +116,23 @@ function AllBanner() {
                         currentData.map((item, index) => (
                             <CTableRow key={index}>
                                 <CTableDataCell>{startIndex + index + 1}</CTableDataCell>
+                                <CTableDataCell>{item.title}</CTableDataCell>
+                                <CTableDataCell>{item.description}</CTableDataCell>
                                 <CTableDataCell>
-                                    <img src={item?.bannerImage?.url} alt="Banner" width={100} />
+                                    <img src={item.image.url} alt="Hero" width={100} />
                                 </CTableDataCell>
-                                <CTableDataCell className='table-text'>{item?.view}</CTableDataCell>
                                 <CTableDataCell>
                                     <CFormSwitch
                                         id={`formSwitch-${item._id}`}
-                                        checked={item?.active}
+                                        checked={item.status}
                                         onChange={() =>
-                                            handleUpdateActive(item._id, item.active)
+                                            handleUpdateStatus(item._id, item.status)
                                         }
                                     />
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                    <div className='action-parent'>
-                                        {/* <div className='edit'>
-                                            <i class="ri-pencil-fill"></i>
-                                        </div> */}
+                                    <div className="action-parent">
+                                        
                                         <div
                                             className="delete"
                                             onClick={() => confirmDelete(item._id)}
@@ -184,4 +175,4 @@ function AllBanner() {
     );
 }
 
-export default AllBanner;
+export default AllHero;

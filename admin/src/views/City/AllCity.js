@@ -5,80 +5,53 @@ import {
     CSpinner,
     CPagination,
     CPaginationItem,
-    CFormSwitch,
+    CNavLink,
 } from '@coreui/react';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
-function AllWorkDescriptionImage() {
-    const [banners, setBanners] = React.useState([]);
+const AllCity = () => {
+    const [locations, setLocations] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 10;
 
-    // Fetch banners
-    const handleFetchBanner = async () => {
+    // Fetch all locations
+    const fetchLocations = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('https://api.helpubuild.co.in/api/v1/get-all-describe-work-image');
-            setBanners(data.data || []); // Ensure default empty array
+            const { data } = await axios.get('http://localhost:8000/api/v1/get_locations');
+            setLocations(data.data); // Assuming data is returned in the `data` field
         } catch (error) {
-            console.error('Error fetching banners:', error);
-            toast.error('Failed to load banners. Please try again.');
+            console.error('Error fetching locations:', error);
+            toast.error('Failed to load locations. Please try again later.');
         } finally {
             setLoading(false);
         }
     };
 
-    // Update Active Status
-    const handleUpdateActive = async (id, currentStatus) => {
-        setLoading(true);
-        // console.log("i am hit",currentStatus)
+    React.useEffect(() => {
+        fetchLocations();
+    }, []);
+
+    // Delete location
+    const handleDeleteLocation = async (id) => {
         try {
-            const updatedStatus = !currentStatus;
-            await axios.put(`https://api.helpubuild.co.in/api/v1/update-work-banner-status/${id}`, {
-                active: updatedStatus,
-            });
-
-            // console.log("i am hit 2")
-
-            setBanners((prevBanners) =>
-                prevBanners.map((banner) =>
-                    banner._id === id ? { ...banner, active: updatedStatus } : banner
-                )
-            );
-            toast.success('Status updated successfully!');
+            setLoading(true);
+            await axios.delete(`http://localhost:8000/api/v1/delete_location/${id}`);
+            setLocations((prevLocations) => prevLocations.filter((location) => location._id !== id));
+            toast.success('Location deleted successfully');
         } catch (error) {
-            console.error('Error updating status:', error);
-            // toast.error('Unable to update status. Please try again.');
-            toast.error(
-                error?.response?.data?.errors?.[0] ||
-                error?.response?.data?.message ||
-                'Failed to add the image. Please try again later.'
-            );
+            console.error('Error deleting location:', error);
+            toast.error(error?.response?.data?.message || 'Please try again later');
         } finally {
             setLoading(false);
         }
     };
 
-    // Delete Banner
-    const handleDeleteBanner = async (id) => {
-        setLoading(true);
-        try {
-            await axios.delete(`https://api.helpubuild.co.in/api/v1/delete-describe-work-image/${id}`);
-            setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
-            toast.success('Banner deleted successfully!');
-        } catch (error) {
-            console.error('Error deleting banner:', error);
-            toast.error('Failed to delete the banner. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // Confirm Delete
+    // Confirm delete
     const confirmDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -90,28 +63,24 @@ function AllWorkDescriptionImage() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                handleDeleteBanner(id);
+                handleDeleteLocation(id);
             }
         });
     };
 
-    React.useEffect(() => {
-        handleFetchBanner();
-    }, []);
-
     // Calculate paginated data
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = banners.slice(startIndex, startIndex + itemsPerPage);
+    const currentData = locations.slice(startIndex, startIndex + itemsPerPage);
 
     // Calculate total pages
-    const totalPages = Math.ceil(banners.length / itemsPerPage);
+    const totalPages = Math.ceil(locations.length / itemsPerPage);
 
     // Handle page change
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const heading = ['S.No', 'Image', 'Active', 'Action'];
+    const tableHeading = ['S.No', 'City Name', 'Action'];
 
     return (
         <>
@@ -119,32 +88,23 @@ function AllWorkDescriptionImage() {
                 <div className="spin-style">
                     <CSpinner color="primary" variant="grow" />
                 </div>
-            ) : banners.length === 0 ? (
-                <div className="no-data">
-                    <p>No data available</p>
-                </div>
             ) : (
                 <Table
-                    heading="All Work Description Images"
-                    btnText="Add Image"
-                    btnURL="/work_description_image/add_work_description_image"
-                    tableHeading={heading}
+                    heading="All Cities"
+                    btnText="Add City"
+                    btnURL="/location/add-location"
+                    tableHeading={tableHeading}
                     tableContent={
+                        currentData &&
                         currentData.map((item, index) => (
-                            <CTableRow key={item._id}>
+                            <CTableRow key={index}>
                                 <CTableDataCell>{startIndex + index + 1}</CTableDataCell>
-                                <CTableDataCell>
-                                    <img src={item?.image?.url} alt="Banner" width={100} />
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                    <CFormSwitch
-                                        id={`formSwitch-${item._id}`}
-                                        checked={item.active}
-                                        onChange={() => handleUpdateActive(item._id, item.active)}
-                                    />
-                                </CTableDataCell>
+                                <CTableDataCell className="table-text">{item.name}</CTableDataCell>
                                 <CTableDataCell>
                                     <div className="action-parent">
+                                        <CNavLink href={`#/location/edit-location/${item._id}`} className="edit">
+                                            <i className="ri-pencil-fill"></i>
+                                        </CNavLink>
                                         <div
                                             className="delete"
                                             onClick={() => confirmDelete(item._id)}
@@ -157,7 +117,7 @@ function AllWorkDescriptionImage() {
                         ))
                     }
                     pagination={
-                        <CPagination className="justify-content-center">
+                        <CPagination className="justify-content-center" aria-label="Page navigation example">
                             <CPaginationItem
                                 disabled={currentPage === 1}
                                 onClick={() => handlePageChange(currentPage - 1)}
@@ -185,6 +145,6 @@ function AllWorkDescriptionImage() {
             )}
         </>
     );
-}
+};
 
-export default AllWorkDescriptionImage;
+export default AllCity;

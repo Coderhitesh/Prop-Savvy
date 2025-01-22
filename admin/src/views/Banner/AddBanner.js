@@ -1,15 +1,16 @@
 import React from 'react';
 import Form from '../../components/Form/Form';
-import { CCol, CFormInput, CFormLabel, CFormSelect, CButton } from '@coreui/react';
+import { CCol, CFormInput, CFormLabel, CButton } from '@coreui/react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-function AddBanner() {
+function AddHero() {
     const [loading, setLoading] = React.useState(false);
     const [formData, setFormData] = React.useState({
-        view: '',
+        title: '',
+        description: '',
     });
-    const [bannerFile, setBannerFile] = React.useState(null);
+    const [heroFile, setHeroFile] = React.useState(null);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -20,36 +21,37 @@ function AddBanner() {
     // Handle file selection
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setBannerFile(file);
+        setHeroFile(file);
     };
 
     // Submit the form
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.view || !bannerFile) {
-            toast.error('Please fill out all required fields and upload a banner.');
+        if (!formData.title || !formData.description || !heroFile) {
+            toast.error('Please fill out all required fields and upload an image.');
             return;
         }
 
         const payload = new FormData();
-        payload.append('view', formData.view);
-        payload.append('bannerImage', bannerFile);
+        payload.append('title', formData.title);
+        payload.append('description', formData.description);
+        payload.append('image', heroFile);
 
         setLoading(true);
         try {
-            const res = await axios.post('https://api.helpubuild.co.in/api/v1/create-banner', payload, {
+            const res = await axios.post('http://localhost:8000/api/v1/create_hero', payload, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            toast.success('Banner added successfully!');
+            toast.success('Hero added successfully!');
             // Redirect or reset form here
-            setFormData({ view: '' });
-            // setBannerFile(null);
+            setFormData({ title: '', description: '' });
+            setHeroFile(null);
         } catch (error) {
-            console.log('Error submitting banner:', error);
+            console.log('Error submitting hero:', error);
             toast.error(
                 error?.response?.data?.errors?.[0] ||
                 error?.response?.data?.message ||
-                'Failed to add the banner. Please try again later.'
+                'Failed to add the hero. Please try again later.'
             );
         } finally {
             setLoading(false);
@@ -59,38 +61,51 @@ function AddBanner() {
     return (
         <>
             <Form
-                heading="Add Banner"
+                heading="Add Hero"
                 btnText="Back"
-                btnURL="/banner/all-banner"
+                btnURL="/hero/all-heroes"
                 onSubmit={handleSubmit}
                 formContent={
                     <>
-                        {/* View In Field */}
+                        {/* Title Field */}
                         <CCol md={6} lg={6} xl={6} sm={12}>
-                            <CFormLabel className="form_label" htmlFor="view">
-                                View In
+                            <CFormLabel className="form_label" htmlFor="title">
+                                Title
                             </CFormLabel>
-                            <CFormSelect
-                                name="view"
-                                id="view"
-                                value={formData.view}
+                            <CFormInput
+                                type="text"
+                                id="title"
+                                name="title"
+                                value={formData.title}
                                 onChange={handleChange}
-                            >
-                                <option value="">Choose...</option>
-                                <option value="Desktop">Desktop</option>
-                                <option value="Mobile">Mobile</option>
-                            </CFormSelect>
+                                placeholder="Enter hero title"
+                            />
                         </CCol>
 
-                        {/* Upload Banner Field */}
+                        {/* Description Field */}
                         <CCol md={6} lg={6} xl={6} sm={12}>
-                            <CFormLabel className="form_label" htmlFor="banner">
-                                Upload Banner
+                            <CFormLabel className="form_label" htmlFor="description">
+                                Description
+                            </CFormLabel>
+                            <CFormInput
+                                type="text"
+                                id="description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                placeholder="Enter hero description"
+                            />
+                        </CCol>
+
+                        {/* Upload Image Field */}
+                        <CCol md={6} lg={6} xl={6} sm={12}>
+                            <CFormLabel className="form_label" htmlFor="image">
+                                Upload Image
                             </CFormLabel>
                             <CFormInput
                                 type="file"
-                                id="banner"
-                                name="banner"
+                                id="image"
+                                name="image"
                                 accept="image/*"
                                 onChange={handleFileChange}
                             />
@@ -109,4 +124,4 @@ function AddBanner() {
     );
 }
 
-export default AddBanner;
+export default AddHero;

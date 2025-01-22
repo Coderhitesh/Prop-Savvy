@@ -216,7 +216,7 @@ exports.deleteHero = async (req, res) => {
         if (hero.image.public_id) {
             await deleteImageFromCloudinary(hero.image.public_id)
         }
-        await hero.remove();
+        await Hero.findByIdAndDelete(id);
         res.status(200).json({
             success: true,
             message: 'Hero is deleted'
@@ -227,6 +227,49 @@ exports.deleteHero = async (req, res) => {
             success: false,
             message: 'Internal Server Error',
             error: error.message
+        });
+    }
+};
+
+exports.updateHeroStatus = async (req, res) => {
+    try {
+        const { id } = req.params; // Extract the id from the request parameters
+        const { status } = req.body; // Extract the status from the request body
+
+        // Validate the status field
+        if (typeof status !== 'boolean') {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid status value. Status must be a boolean.',
+            });
+        }
+
+        // Find and update the hero by id
+        const updatedHero = await Hero.findByIdAndUpdate(
+            id,
+            { status }, // Update the status field
+            { new: true } // Return the updated document
+        );
+
+        // If hero not found, return an error
+        if (!updatedHero) {
+            return res.status(404).json({
+                success: false,
+                message: 'Hero not found.',
+            });
+        }
+
+        // Return success response
+        res.status(200).json({
+            success: true,
+            message: 'Hero status updated successfully.',
+            data: updatedHero,
+        });
+    } catch (error) {
+        console.error('Error updating hero status:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error. Please try again later.',
         });
     }
 };

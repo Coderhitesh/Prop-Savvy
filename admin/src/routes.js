@@ -1,8 +1,4 @@
 import React from 'react'
-import AddPlanJourneyImage from './views/PlanJourneyImage/AddPlanJourneyImage'
-import AllPlanJourneyImage from './views/PlanJourneyImage/AllPlanJourneyImage'
-import AddAboutImage from './views/AboutImage/AddAboutImage'
-import AllAboutImage from './views/AboutImage/AllAboutImage'
 import AllTestimonial from './views/Testimonial/AllTestimonial'
 import AddTestimonial from './views/Testimonial/AddTestimonial'
 import EditTestimonial from './views/Testimonial/EditTestimonial'
@@ -10,9 +6,13 @@ import AllBlogs from './views/Blogs/AllBlogs'
 import AddBlogs from './views/Blogs/AddBlogs'
 import EditBlogs from './views/Blogs/EditBlogs'
 import AllUser from './views/User/AllUser'
-import AllChatRoom from './views/ChatRoom/AllChatRoom'
 import AllProvider from './views/Provider/AllProvider'
-import AllWithdraw from './views/Withdraw/AllWithdraw'
+import AllCity from './views/City/AllCity'
+import AddCity from './views/City/AddCity'
+import EditCity from './views/City/EditCity'
+import AddPropertyType from './views/PropertyType/AddPropertyType'
+import EditPropertyType from './views/PropertyType/EditPropertyType'
+import AllPropertyType from './views/PropertyType/AllPropertyType'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -68,9 +68,6 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const AddBanner = React.lazy(() => import('./views/Banner/AddBanner'))
 const ALLBanner = React.lazy(() => import('./views/Banner/AllBanner'))
 // const EditBanner = React.lazy(() => import('./views/Banner/EditBanner'))
-
-const AddWorkDescriptionImage = React.lazy(() => import('./views/WorkDescriptionImage/AddWorkDescriptionImage'))
-const AllWorkDescriptionImage = React.lazy(() => import('./views/WorkDescriptionImage/AllWorkDescriptionImage'))
 
 
 const routes = [
@@ -130,20 +127,17 @@ const routes = [
   { path: '/banner/add-banner', name: 'Add Banner', element: AddBanner },
   { path: '/banner/all-banner', name: 'All Banner', element: ALLBanner },
 
-  // work description routes here 
-  { path: '/work_description_image', name: 'Work Description Image', element: Cards, exact: true },
-  { path: '/work_description_image/add_work_description_image', name: 'Add Work Description Image', element: AddWorkDescriptionImage },
-  { path: '/work_description_image/all_work_description_image', name: 'All Banner', element: AllWorkDescriptionImage },
+  // location routes here 
+  { path: '/location', name: 'Location', element: Cards, exact: true },
+  { path: '/location/add-location', name: 'Add Location', element: AddCity },
+  { path: '/location/edit-location/:id', name: 'Edit Location', element: EditCity },
+  { path: '/location/all-location', name: 'All Location', element: AllCity },
 
-  // plan journey routes here 
-  { path: '/plan_journey_image', name: 'Plan Journey Image', element: Cards, exact: true },
-  { path: '/plan_journey_image/add_plan_journey_image', name: 'Add Plan Journey Image', element: AddPlanJourneyImage },
-  { path: '/plan_journey_image/all_plan_journey_image', name: 'All Plan Journey Image', element: AllPlanJourneyImage },
-
-  // about image routes here 
-  { path: '/about_image', name: 'Plan Journey Image', element: Cards, exact: true },
-  { path: '/about_image/add_about_image', name: 'Add About Image', element: AddAboutImage },
-  { path: '/about_image/all_about_image', name: 'All About Image', element: AllAboutImage },
+  // location routes here 
+  { path: '/property-type', name: 'Property Type', element: Cards, exact: true },
+  { path: '/property-type/add-property-type', name: 'Add Property Type', element: AddPropertyType },
+  { path: '/property-type/edit-property-type/:id', name: 'Edit Property Type', element: EditPropertyType },
+  { path: '/property-type/all-property-type', name: 'All Property Type', element: AllPropertyType },
 
   // testimonial routes here 
   { path: '/testimonial', name: 'Testimonial', element: Cards, exact: true },
@@ -163,23 +157,10 @@ const routes = [
   { path: '/user/all_user', name: 'All Users', element: AllUser },
   // { path: '/user/edit_user/:id', name: 'Edit Blogs', element: EditBlogs },
 
-  // chat routes here 
-  { path: '/chats', name: 'Chats', element: Cards, exact: true },
-  // { path: '/blogs/add_blogs', name: 'Add Blogs', element: AddBlogs },
-  { path: '/chats/all_chat', name: 'All Chats', element: AllChatRoom },
-  // { path: '/blogs/edit_blogs/:id', name: 'Edit Blogs', element: EditBlogs },
-
   // provider routes here 
   { path: '/provider', name: 'Provider', element: Cards, exact: true },
   // { path: '/blogs/add_blogs', name: 'Add Blogs', element: AddBlogs },
   { path: '/provider/all_provider', name: 'All Provider', element: AllProvider },
-  // { path: '/blogs/edit_blogs/:id', name: 'Edit Blogs', element: EditBlogs },
-
-  // withdraw routes here 
-  { path: '/withdraw', name: 'Withdraw Request', element: Cards, exact: true },
-  // { path: '/blogs/add_blogs', name: 'Add Blogs', element: AddBlogs },
-  { path: '/withdraw/all_withdraw', name: 'All Withdraw Request', element: AllWithdraw },
-  // { path: '/blogs/edit_blogs/:id', name: 'Edit Blogs', element: EditBlogs },
 ]
 
 export default routes

@@ -5,79 +5,53 @@ import {
     CSpinner,
     CPagination,
     CPaginationItem,
-    CFormSwitch,
+    CNavLink,
 } from '@coreui/react';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
-function AllAboutImage() {
-    const [banners, setBanners] = React.useState([]);
+const AllPropertyType = () => {
+    const [propertyTypes, setPropertyTypes] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [currentPage, setCurrentPage] = React.useState(1);
     const itemsPerPage = 10;
 
-    const handleFetchBanner = async () => {
+    // Fetch all property types
+    const fetchPropertyTypes = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('https://api.helpubuild.co.in/api/v1/get-all-about-image');
-            setBanners(data.data || []); // Ensure default empty array
+            const { data } = await axios.get('http://localhost:8000/api/v1/get_propertyTypes');
+            setPropertyTypes(data.data); // Assuming data is returned in the `data` field
         } catch (error) {
-            console.error('Error fetching banners:', error);
-            toast.error('Failed to load banners. Please try again.');
+            console.error('Error fetching property types:', error);
+            toast.error('Failed to load property types. Please try again later.');
         } finally {
             setLoading(false);
         }
     };
 
-    // Update Active Status
-    const handleUpdateActive = async (id, currentStatus) => {
-        setLoading(true);
-        // console.log("i am hit",currentStatus)
+    React.useEffect(() => {
+        fetchPropertyTypes();
+    }, []);
+
+    // Delete property type
+    const handleDeletePropertyType = async (id) => {
         try {
-            const updatedStatus = !currentStatus;
-            await axios.put(`https://api.helpubuild.co.in/api/v1/update-about-banner-status/${id}`, {
-                active: updatedStatus,
-            });
-
-            // console.log("i am hit 2")
-
-            setBanners((prevBanners) =>
-                prevBanners.map((banner) =>
-                    banner._id === id ? { ...banner, active: updatedStatus } : banner
-                )
-            );
-            toast.success('Status updated successfully!');
+            setLoading(true);
+            await axios.delete(`http://localhost:8000/api/v1/delete_propertyType/${id}`);
+            setPropertyTypes((prevPropertyTypes) => prevPropertyTypes.filter((type) => type._id !== id));
+            toast.success('Property Type deleted successfully');
         } catch (error) {
-            console.error('Error updating status:', error);
-            // toast.error('Unable to update status. Please try again.');
-            toast.error(
-                error?.response?.data?.errors?.[0] ||
-                error?.response?.data?.message ||
-                'Failed to add the image. Please try again later.'
-            );
+            console.error('Error deleting property type:', error);
+            toast.error(error?.response?.data?.message || 'Please try again later');
         } finally {
             setLoading(false);
         }
     };
 
-    // Delete Banner
-    const handleDeleteBanner = async (id) => {
-        setLoading(true);
-        try {
-            await axios.delete(`https://api.helpubuild.co.in/api/v1/delete-about-image/${id}`);
-            setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
-            toast.success('Banner deleted successfully!');
-        } catch (error) {
-            console.error('Error deleting banner:', error);
-            toast.error('Failed to delete the banner. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // Confirm Delete
+    // Confirm delete
     const confirmDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -89,28 +63,24 @@ function AllAboutImage() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                handleDeleteBanner(id);
+                handleDeletePropertyType(id);
             }
         });
     };
 
-    React.useEffect(() => {
-        handleFetchBanner();
-    }, []);
-
     // Calculate paginated data
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = banners.slice(startIndex, startIndex + itemsPerPage);
+    const currentData = propertyTypes.slice(startIndex, startIndex + itemsPerPage);
 
     // Calculate total pages
-    const totalPages = Math.ceil(banners.length / itemsPerPage);
+    const totalPages = Math.ceil(propertyTypes.length / itemsPerPage);
 
     // Handle page change
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const heading = ['S.No', 'Image', 'Active', 'Action'];
+    const tableHeading = ['S.No', 'Property Type Name', 'Action'];
 
     return (
         <>
@@ -118,32 +88,23 @@ function AllAboutImage() {
                 <div className="spin-style">
                     <CSpinner color="primary" variant="grow" />
                 </div>
-            ) : banners.length === 0 ? (
-                <div className="no-data">
-                    <p>No data available</p>
-                </div>
             ) : (
                 <Table
-                    heading="All About Images"
-                    btnText="Add Image"
-                    btnURL="/about_image/add_about_image"
-                    tableHeading={heading}
+                    heading="All Property Types"
+                    btnText="Add Property Type"
+                    btnURL="/property-type/add-property-type"
+                    tableHeading={tableHeading}
                     tableContent={
+                        currentData &&
                         currentData.map((item, index) => (
-                            <CTableRow key={item._id}>
+                            <CTableRow key={index}>
                                 <CTableDataCell>{startIndex + index + 1}</CTableDataCell>
-                                <CTableDataCell>
-                                    <img src={item?.image?.url} alt="Banner" width={100} />
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                    <CFormSwitch
-                                        id={`formSwitch-${item._id}`}
-                                        checked={item.active}
-                                        onChange={() => handleUpdateActive(item._id, item.active)}
-                                    />
-                                </CTableDataCell>
+                                <CTableDataCell className="table-text">{item.name}</CTableDataCell>
                                 <CTableDataCell>
                                     <div className="action-parent">
+                                        <CNavLink href={`#/property-type/edit-property-type/${item._id}`} className="edit">
+                                            <i className="ri-pencil-fill"></i>
+                                        </CNavLink>
                                         <div
                                             className="delete"
                                             onClick={() => confirmDelete(item._id)}
@@ -156,7 +117,7 @@ function AllAboutImage() {
                         ))
                     }
                     pagination={
-                        <CPagination className="justify-content-center">
+                        <CPagination className="justify-content-center" aria-label="Page navigation example">
                             <CPaginationItem
                                 disabled={currentPage === 1}
                                 onClick={() => handlePageChange(currentPage - 1)}
@@ -184,6 +145,6 @@ function AllAboutImage() {
             )}
         </>
     );
-}
+};
 
-export default AllAboutImage
+export default AllPropertyType;

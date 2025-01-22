@@ -26,20 +26,14 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Work Description Image',
-    to: '/work_description_image/all_work_description_image',
+    name: 'All City',
+    to: '/location/all-location',
     icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Plan Journey Image',
-    to: '/plan_journey_image/all_plan_journey_image',
-    icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'About Image',
-    to: '/about_image/all_about_image',
+    name: 'All Property Type',
+    to: '/property-type/all-property-type',
     icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
   {
@@ -65,18 +59,6 @@ const _nav = [
     name: 'All Provider',
     to: '/provider/all_provider',
     icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'All Chat',
-    to: '/chats/all_chat',
-    icon: <CIcon icon={cilChatBubble} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Withdraw Request',
-    to: '/withdraw/all_withdraw',
-    icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
   },
 ]
 
