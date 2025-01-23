@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Building2, Award, Users, Target, ArrowUpRight, Clock, Shield, Globe2 } from 'lucide-react';
+import Link from 'next/link';
 
 function AboutHome() {
   return (
@@ -126,10 +127,10 @@ function AboutHome() {
               </div>
 
               {/* CTA Button */}
-              <button className="group mt-8 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg inline-flex items-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02]">
+              <Link href={'/about-us'} className="group mt-8 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg inline-flex items-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02]">
                 <span>Learn More About Us</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -49,7 +49,7 @@ const TopRatedHome = () => {
 
         {/* Properties Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.length > 0 && properties.map((property,index) => (
+          {properties.length > 0 && properties.slice(0,3).map((property,index) => (
             <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
               <div className="relative">
                 <img
@@ -57,14 +57,6 @@ const TopRatedHome = () => {
                   alt={property?.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                {/* <div className="absolute top-4 right-4 flex gap-2">
-                  <button className="p-2 bg-white/90 backdrop-blur-md rounded-full hover:bg-white transition-colors">
-                    <Heart className="w-5 h-5 text-gray-600" />
-                  </button>
-                  <button className="p-2 bg-white/90 backdrop-blur-md rounded-full hover:bg-white transition-colors">
-                    <Share2 className="w-5 h-5 text-gray-600" />
-                  </button>
-                </div> */}
                 <div className="absolute bottom-4 left-4">
                   <div className="inline-flex items-center gap-1 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full">
                     <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -89,21 +81,6 @@ const TopRatedHome = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 py-4 border-t border-gray-100">
-                  {/* <div className="flex items-center gap-2">
-                    <Bed className="w-4 h-4 text-gray-400" />
-                    <span className="text-gray-600">{property.beds} Beds</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Bath className="w-4 h-4 text-gray-400" />
-                    <span className="text-gray-600">{property.baths} Baths</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Square className="w-4 h-4 text-gray-400" />
-                    <span className="text-gray-600">{property.sqft} sqft</span>
-                  </div> */}
-                </div>
-
                 <Link href={`/properties/${property?.slug}`} className="w-full mt-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg inline-flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02]">
                   View Details
                   <ArrowRight className="w-4 h-4" />
@@ -115,10 +92,10 @@ const TopRatedHome = () => {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <button className="group inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+          <Link href={'/properties'} className="group inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors">
             <span>View All Properties</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

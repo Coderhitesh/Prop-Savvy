@@ -34,7 +34,7 @@ router.delete('/delete_hero/:id', deleteHero);
 router.post('/create_property', upload.single('image'), createProperty);
 router.get('/get_properties', findAllProperties);
 router.get('/get_property/:id', findOneProperty);
-router.get('/get_property', findPropertyByLocationAndPropertyType);
+router.get('/get_property_by_location', findPropertyByLocationAndPropertyType);
 router.get('/get_property_slug/:slug', findPropertyBySlug);
 router.put('/update_property/:id', upload.single('image'), updateProperty);
 router.put('/update_hero_status/:id', updateHeroStatus);

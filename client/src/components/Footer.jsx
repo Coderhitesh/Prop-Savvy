@@ -13,6 +13,7 @@ import {
   ArrowRight,
   Building2
 } from 'lucide-react';
+import Link from 'next/link';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -54,17 +55,34 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Quick Links</h3>
             <ul className="space-y-4">
-              {['Home', 'Properties', 'About Us', 'Services', 'Blog', 'Contact'].map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-primary flex items-center gap-2 group"
-                  >
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    {link}
-                  </a>
-                </li>
-              ))}
+              <Link
+                href="/"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Home
+              </Link>
+              <Link
+                href="/properties"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Properties
+              </Link>
+              <Link
+                href="/about-us"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                About Us
+              </Link>
+              <Link
+                href="/contact"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Contact
+              </Link>
             </ul>
           </div>
 
@@ -72,24 +90,21 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Our Services</h3>
             <ul className="space-y-4">
-              {[
-                'Property Sales',
-                'Property Management',
-                'Real Estate Consulting',
-                'Market Analysis',
-                'Investment Advisory',
-                'Property Valuation'
-              ].map((service) => (
-                <li key={service}>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-primary flex items-center gap-2 group"
-                  >
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    {service}
-                  </a>
-                </li>
-              ))}
+              
+            <Link
+                href="/properties"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Properties
+              </Link>
+              <Link
+                href="/blogs"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Blog
+              </Link>
             </ul>
           </div>
 
@@ -123,44 +138,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="border-t border-gray-200 py-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Subscribe to Our Newsletter</h3>
-            <p className="text-gray-600 mb-6">Stay updated with the latest properties and real estate news</p>
-            <form className="flex gap-2 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-primary text-white px-6 py-2 rounded-xl hover:bg-primary/90 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-
         {/* Bottom Bar */}
         <div className="border-t border-gray-200 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 text-sm">
               © {currentYear} Prop Savvy Realtors. All rights reserved.
             </p>
-            <div className="flex gap-6">
-              <a href="#" className="text-gray-600 hover:text-primary text-sm">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-600 hover:text-primary text-sm">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-600 hover:text-primary text-sm">
-                Cookie Policy
-              </a>
-            </div>
           </div>
         </div>
       </div>

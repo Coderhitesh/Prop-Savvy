@@ -105,8 +105,15 @@ function AllBlogs() {
                                 </CTableDataCell>
                                 <CTableDataCell>{item.title}</CTableDataCell>
                                 <CTableDataCell>
-                                <p dangerouslySetInnerHTML={{ __html: item.content }} />
-                                </CTableDataCell>
+  <p
+    dangerouslySetInnerHTML={{
+      __html: item.content
+        .split(" ")
+        .slice(0, 8)
+        .join(" ") + (item.content.split(" ").length > 8 ? "..." : ""),
+    }}
+  />
+</CTableDataCell>
                                 <CTableDataCell>
                                     <div className="action-parent">
                                         <CNavLink href={`#/blogs/edit_blogs/${item._id}`} className='edit'>
