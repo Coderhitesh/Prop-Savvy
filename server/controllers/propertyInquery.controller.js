@@ -200,15 +200,13 @@ exports.findOnePropertyInquiry = async (req, res) => {
 exports.deletePropertyInquiry = async (req, res) => {
     try {
         const id = req.params.id;
-        const propertyInquiry = await PropertyInquery.findById(id);
+        const propertyInquiry = await PropertyInquery.findByIdAndDelete(id);
         if (!propertyInquiry) {
             return res.status(404).json({
                 success: false,
                 message: 'PropertyInquiry not found'
             });
         }
-
-        await propertyInquiry.remove();
         res.status(200).json({
             success: true,
             message: 'PropertyInquiry is deleted'

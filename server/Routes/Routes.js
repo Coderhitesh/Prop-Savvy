@@ -7,7 +7,7 @@ const { createHero, findAllHeros, findOneHero, updateHero, deleteHero, updateHer
 const { createProperty, findAllProperties, findPropertyBySlug, findOneProperty, findPropertyByLocationAndPropertyType, updateProperty, deleteProperty } = require('../controllers/property.controller');
 const { createInquery, findAllInquerys } = require('../controllers/inquery.controller');
 const { getAllBlog, getSingleBlog, deleteBlog, updateBlog, createBlog, getBlogBySlug } = require('../controllers/blog.controller');
-const { createPropertyInquery, findAllPropertyInquirys } = require('../controllers/propertyInquery.controller');
+const { createPropertyInquery, findAllPropertyInquirys, deletePropertyInquiry } = require('../controllers/propertyInquery.controller');
 
 // Create a new location
 router.post('/create_location', createLocation);
@@ -55,5 +55,6 @@ router.get('/get_blog_by_slug/:slug', getBlogBySlug);
 // property inquiry route here 
 router.post('/create_property_inquery',createPropertyInquery)
 router.get('/get_property_inquery',findAllPropertyInquirys)
+router.delete('/delete_property_inquery/:id',deletePropertyInquiry)
 
 module.exports = router;

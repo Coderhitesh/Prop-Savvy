@@ -42,16 +42,22 @@ const _nav = [
     to: '/property/all-property',
     icon: <CIcon icon={cilImage} customClassName="nav-icon" />,
   },
-  // {
-  //   component: CNavItem,
-  //   name: 'Testimonial',
-  //   to: '/testimonial/all_testimonial',
-  //   icon: <CIcon icon={cilText} customClassName="nav-icon" />,
-  // },
   {
     component: CNavItem,
     name: 'Blogs',
     to: '/blogs/all_blogs',
+    icon: <CIcon icon={cilText} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Property Inquiry',
+    to: '/property_inquiry/all_property_inquiry',
+    icon: <CIcon icon={cilText} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Inquiry',
+    to: '/inquiry/all_inquiry',
     icon: <CIcon icon={cilText} customClassName="nav-icon" />,
   },
 ]

@@ -14,6 +14,8 @@ import AllPropertyType from './views/PropertyType/AllPropertyType'
 import AddProperty from './views/Property/AddProperty'
 import EditProperty from './views/Property/EditProperty'
 import AllProperty from './views/Property/AllProperty'
+import AllPropertyInquiry from './views/PropertyInquery/AllPropertyInquery'
+import AllInquiry from './views/Inquiry/AllInquiry'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -157,6 +159,14 @@ const routes = [
   { path: '/blogs/add_blogs', name: 'Add Blogs', element: AddBlogs },
   { path: '/blogs/all_blogs', name: 'All Blogs', element: AllBlogs },
   { path: '/blogs/edit_blogs/:id', name: 'Edit Blogs', element: EditBlogs },
+
+  // property inquiry routes here 
+  { path: '/property_inquiry', name: 'Property Inquiry', element: Cards, exact: true },
+  { path: '/property_inquiry/all_property_inquiry', name: 'All Property Inquiry', element: AllPropertyInquiry },
+
+  // property inquiry routes here 
+  { path: '/inquiry', name: 'Inquiry', element: Cards, exact: true },
+  { path: '/inquiry/all_inquiry', name: 'All Inquiry', element: AllInquiry },
 
 ]
 

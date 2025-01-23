@@ -1,52 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     CTableDataCell,
     CTableRow,
     CSpinner,
     CPagination,
     CPaginationItem,
-    CFormSwitch,
     CNavLink,
+    CModal,
+    CModalHeader,
+    CModalTitle,
+    CModalBody,
+    CModalFooter,
+    CButton,
 } from '@coreui/react';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
-function AllBlogs() {
-    const [banners, setBanners] = React.useState([]);
-    const [loading, setLoading] = React.useState(false);
-    const [currentPage, setCurrentPage] = React.useState(1);
+const AllInquiry = () => {
+    const [inquiries, setInquiries] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const handleFetchBanner = async () => {
+    // Fetch all property inquiries
+    const fetchPropertyInquiries = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('http://localhost:8000/api/v1/get_blogs');
-            setBanners(data.data || []); // Ensure default empty array
+            const { data } = await axios.get('http://localhost:8000/api/v1/get_inqueries');
+            const allData = data.data;
+            setInquiries(allData.reverse()); // Assuming data is returned in the `data` field
         } catch (error) {
-            console.error('Error fetching blogs:', error);
-            toast.error('Failed to load blogs. Please try again.');
-        } finally {
-            setLoading(false);
-        }
-    };
-    // Delete Banner
-    const handleDeleteBanner = async (id) => {
-        setLoading(true);
-        try {
-            await axios.delete(`http://localhost:8000/api/v1/delete-blog/${id}`);
-            setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
-            toast.success('Blog deleted successfully!');
-        } catch (error) {
-            console.error('Error deleting blog:', error);
-            toast.error('Failed to delete the blog. Please try again.');
+            console.error('Error fetching inquiries:', error);
+            toast.error('Failed to load inquiries. Please try again later.');
         } finally {
             setLoading(false);
         }
     };
 
-    // Confirm Delete
+    useEffect(() => {
+        fetchPropertyInquiries();
+    }, []);
+
+    // Delete inquiry
+    const handleDeleteInquiry = async (id) => {
+        try {
+            setLoading(true);
+            await axios.delete(`http://localhost:8000/api/v1/delete_property_inquery/${id}`);
+            setInquiries((prev) => prev.filter((inquiry) => inquiry._id !== id));
+            toast.success('Inquiry deleted successfully');
+        } catch (error) {
+            console.error('Error deleting inquiry:', error);
+            toast.error(error?.response?.data?.message || 'Please try again later');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Confirm delete
     const confirmDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -58,28 +70,22 @@ function AllBlogs() {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                handleDeleteBanner(id);
+                handleDeleteInquiry(id);
             }
         });
     };
 
-    React.useEffect(() => {
-        handleFetchBanner();
-    }, []);
-
-    // Calculate paginated data
+    // Pagination calculations
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = banners.slice(startIndex, startIndex + itemsPerPage);
-
-    // Calculate total pages
-    const totalPages = Math.ceil(banners.length / itemsPerPage);
+    const currentData = inquiries.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(inquiries.length / itemsPerPage);
 
     // Handle page change
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const heading = ['S.No', 'Small Image', 'Large Image', 'Title', 'Content', 'Action'];
+    const tableHeading = ['S.No', 'Name', 'Email', 'Phone', 'Message', 'Actions'];
 
     return (
         <>
@@ -89,29 +95,19 @@ function AllBlogs() {
                 </div>
             ) : (
                 <Table
-                    heading="All Blogs"
-                    btnText="Add Blog"
-                    btnURL="/blogs/add_blogs"
-                    tableHeading={heading}
+                    heading="All Property Inquiries"
+                    tableHeading={tableHeading}
                     tableContent={
+                        currentData &&
                         currentData.map((item, index) => (
                             <CTableRow key={item._id}>
                                 <CTableDataCell>{startIndex + index + 1}</CTableDataCell>
-                                <CTableDataCell>
-                                    <img src={item?.image?.url} alt="small image" width={100} />
-                                </CTableDataCell>
-                                <CTableDataCell>
-                                    <img src={item?.largeImage?.url} alt="small image" width={100} />
-                                </CTableDataCell>
-                                <CTableDataCell>{item.title}</CTableDataCell>
-                                <CTableDataCell>
-                                <p dangerouslySetInnerHTML={{ __html: item.content }} />
-                                </CTableDataCell>
+                                <CTableDataCell className="table-text">{item.name}</CTableDataCell>
+                                <CTableDataCell>{item.email}</CTableDataCell>
+                                <CTableDataCell>{item.phone}</CTableDataCell>
+                                <CTableDataCell>{item.message}</CTableDataCell>
                                 <CTableDataCell>
                                     <div className="action-parent">
-                                        <CNavLink href={`#/blogs/edit_blogs/${item._id}`} className='edit'>
-                                            <i class="ri-pencil-fill"></i>
-                                        </CNavLink>
                                         <div
                                             className="delete"
                                             onClick={() => confirmDelete(item._id)}
@@ -124,7 +120,7 @@ function AllBlogs() {
                         ))
                     }
                     pagination={
-                        <CPagination className="justify-content-center">
+                        <CPagination className="justify-content-center" aria-label="Page navigation example">
                             <CPaginationItem
                                 disabled={currentPage === 1}
                                 onClick={() => handlePageChange(currentPage - 1)}
@@ -152,6 +148,6 @@ function AllBlogs() {
             )}
         </>
     );
-}
+};
 
-export default AllBlogs
+export default AllInquiry
