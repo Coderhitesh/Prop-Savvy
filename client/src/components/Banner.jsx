@@ -110,7 +110,7 @@ const Banner = () => {
                         </select>
                       </div>
                     </div>
-                    <Link href={`/properties/search/${search.location}/${search.type}`} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                    <Link href={`/properties/search?location=${search.location}&type=${search.type}`} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
                       <Search className="w-5 h-5" />
                       <span>Search</span>
                     </Link>
