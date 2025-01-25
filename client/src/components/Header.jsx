@@ -37,7 +37,7 @@ function Header() {
                         width={100}
                         height={100}
                         src={siteLogo} 
-                        // priority={true}
+                        priority={true}
                         className='w-full' 
                         alt='Prop Savvy Realtors'
                          />
