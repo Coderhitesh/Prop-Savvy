@@ -3,7 +3,7 @@ import SingleBlog from '@/components/SingleBlog';
 
 export async function generateMetadata({ params }) {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     const response = await axios.get(`http://localhost:8000/api/v1/get_blog_by_slug/${slug}`);
     // console.log('API response:', response.data); // Ensure this shows the full structure
 
@@ -37,10 +37,10 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   return (
-    <div>
+    <>
       <SingleBlog slug={slug} />
-    </div>
+    </>
   );
 }

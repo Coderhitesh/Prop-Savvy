@@ -5,7 +5,7 @@ import { Menu, X, Phone, } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 // import logo from '@//logo.jpg'
-
+import siteLogo from '/public/logo.jpg';
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -36,8 +36,8 @@ function Header() {
                         <Image 
                         width={100}
                         height={100}
-                        src="/logo.jpg" 
-                        priority={true}
+                        src={siteLogo} 
+                        // priority={true}
                         className='w-full' 
                         alt='Prop Savvy Realtors'
                          />

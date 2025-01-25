@@ -3,9 +3,21 @@
 import React, { useEffect, useState } from 'react';
 import { Search, MapPin, Home, ArrowRight } from 'lucide-react';
 import axios from 'axios'
+import Link from 'next/link';
 
 const Banner = () => {
   const [banner, setBanner] = useState([])
+  const [location, setLocation] = useState([])
+  const [type, setType] = useState([])
+  const [search, setSearch] = useState({
+    location: '',
+    type: ''
+  })
+
+  const handleSearchChange = (e) => {
+    setSearch({ ...search, [e.target.name]: e.target.value });
+  };
+  
 
   const fetchBanner = async () => {
     try {
@@ -15,7 +27,28 @@ const Banner = () => {
       console.log("Internal server error", error)
     }
   }
+
+  const handleFetchlocation = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:8000/api/v1/get_locations')
+      setLocation(data.data)
+    } catch (error) {
+      console.log("Internal server error", error)
+    }
+  }
+
+  const handleFetchType = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:8000/api/v1/get_propertyTypes')
+      setType(data.data)
+    } catch (error) {
+      console.log("Internal server error", error)
+    }
+  }
+
   useEffect(() => {
+    handleFetchlocation()
+    handleFetchType()
     fetchBanner();
   }, [])
 
@@ -23,10 +56,10 @@ const Banner = () => {
     <div className="relative min-h-[600px] flex items-center justify-center">
       {
         banner && banner.slice(0, 1).map((item, index) => (
-          <>
+          <div key={index}>
             {/* Background Image with Overlay */}
             <div
-            key={index}
+              
               className="absolute inset-0 z-0"
               style={{
                 backgroundImage: `url(${item?.image?.url})`,
@@ -54,29 +87,33 @@ const Banner = () => {
                     <div className="flex-1">
                       <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <input
-                          type="text"
-                          placeholder="Enter location"
-                          className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <select name="location" onChange={handleSearchChange} className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                          <option value="">Location</option>
+                          {
+                            location && location.map((item, index) => (
+                              <option key={index} value={item?.name}>{item?.name}</option>
+                            ))
+                          }
+                        </select>
                       </div>
                     </div>
                     <div className="flex-1">
                       <div className="relative">
                         <Home className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                        <select className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                        <select name="type" onChange={handleSearchChange} className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
                           <option value="">Property Type</option>
-                          <option value="house">House</option>
-                          <option value="apartment">Apartment</option>
-                          <option value="condo">Condo</option>
-                          <option value="villa">Villa</option>
+                          {
+                            type && type.map((item, index) => (
+                              <option key={index} value={item?.name}>{item?.name}</option>
+                            ))
+                          }
                         </select>
                       </div>
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                    <Link href={`/properties/search/${search.location}/${search.type}`} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
                       <Search className="w-5 h-5" />
                       <span>Search</span>
-                    </button>
+                    </Link>
                   </div>
                 </div>
 
@@ -105,7 +142,7 @@ const Banner = () => {
                 </div>
               </div>
             </div>
-          </>
+          </div>
         ))
       }
 

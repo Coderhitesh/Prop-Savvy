@@ -8,14 +8,14 @@ import ContactHome from './ContactHome'
 
 function Home() {
   return (
-    <div className=''>
+    <>
       <Banner />
       <AboutHome />
       <TopRatedHome />
       <OfferBannerHome />
       <Testimonial />
       <ContactHome />
-    </div>
+    </>
   )
 }
 

@@ -1,6 +1,7 @@
 const Property = require('../models/property.model');
 const { uploadImage, deleteImageFromCloudinary } = require('../Utils/Cloudnary');
 const fs = require('fs').promises;
+const mongoose = require('mongoose');
 
 // Create and Save a new Property
 
@@ -278,16 +279,29 @@ exports.deleteProperty = async (req, res) => {
 exports.findPropertyByLocationAndPropertyType = async (req, res) => {
     try {
         const { location, propertyType } = req.query;
+        console.log("Query Parameters:", req.query); // Log all query parameters
 
-        // Build the query object based on parameters
+        // Initialize query object
         let query = {};
-        if (location) query.location = location;
-        if (propertyType) query.propertyType = propertyType;
 
-        // Fetch the properties with population
+        // Add filters if location and propertyType are provided
+        if (location) query.location = mongoose.Types.ObjectId(location);  // Convert string to ObjectId
+        if (propertyType) query.propertyType = mongoose.Types.ObjectId(propertyType);  // Convert string to ObjectId
+
+        // Fetch properties with population of related fields
         const properties = await Property.find(query)
-            .populate('location') // Populate location details
-            .populate('propertyType'); // Populate property type details
+            .populate('location')  // Populate location details
+            .populate('propertyType');  // Populate property type details
+
+        console.log("properties", properties);  // Log the fetched properties
+
+        // If no properties are found, return a specific message
+        if (properties.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No properties found for the given location and property type'
+            });
+        }
 
         res.status(200).json({
             success: true,

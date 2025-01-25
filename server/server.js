@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 8123
 const Router = require('./Routes/Routes')
 app.use(Cors())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
@@ -18,5 +20,5 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1', Router)
 
-// Call the db function
+
 db()

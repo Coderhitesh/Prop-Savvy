@@ -15,29 +15,30 @@ import {
     Info,
     ExternalLink
 } from 'lucide-react';
+import { notFound, useRouter } from 'next/navigation';
 
 const SingleBlog = ({slug}) => {
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetchBlog();
-    }, [slug]);
+    const router = useRouter();
+  
 
     const fetchBlog = async () => {
         try {
             setLoading(true);
             const response = await axios.get(`http://localhost:8000/api/v1/get_blog_by_slug/${slug}`);
             setBlog(response.data.data);
-            setError(null);
         } catch (err) {
-            setError('Failed to load blog post. Please try again later.');
             console.error('Error fetching blog:', err);
         } finally {
             setLoading(false);
         }
     };
+
+
+    useEffect(() => {
+        fetchBlog();
+    }, [slug]);
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -58,30 +59,8 @@ const SingleBlog = ({slug}) => {
         );
     }
 
-    if (error) {
-        return (
-            <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-                <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md mx-4">
-                    <div className="text-center">
-                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Info className="w-8 h-8 text-red-600" />
-                        </div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">Oops!</h2>
-                        <p className="text-gray-600 mb-6">{error}</p>
-                        <button
-                            onClick={() => window.history.back()}
-                            className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105"
-                        >
-                            <ArrowLeft className="w-5 h-5 mr-2" />
-                            Return to Blogs
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
-    if (!blog) return null;
+    if (!blog) return notFound();
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
