@@ -26,7 +26,7 @@ const SingleBlog = ({slug}) => {
     const fetchBlog = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`http://localhost:8000/api/v1/get_blog_by_slug/${slug}`);
+            const response = await axios.get(`https://www.api.propsavvyrealtors.com/api/v1/get_blog_by_slug/${slug}`);
             setBlog(response.data.data);
         } catch (err) {
             console.error('Error fetching blog:', err);

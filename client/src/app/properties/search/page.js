@@ -12,7 +12,7 @@ const page = () => {
   const handleFetchLocation = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/get_property_by_location?location=${location}&type=${type}`
+        `https://www.api.propsavvyrealtors.com/api/v1/get_property_by_location?location=${location}&type=${type}`
       );
       setProperties(data.data);
     } catch (error) {
