@@ -7,7 +7,7 @@ const AppFooter = () => {
       <div>
         <span className="ms-1">Copyright &copy; 2024 </span>
         <a href="https://helpubuild.co.in/" target="_blank" rel="noopener noreferrer">
-          Help U Build
+        Prop savvy realtors
         </a>
         <span className="ms-1">. All Right Reserved.</span>
       </div>
