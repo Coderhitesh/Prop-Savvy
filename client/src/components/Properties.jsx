@@ -13,7 +13,7 @@ const Properties = () => {
 
   const handleFetch = async () => {
     try {
-      const res = await axios.get("https://www.api.propsavvyrealtors.com/api/v1/get_properties");
+      const res = await axios.get("https://api.propsavvyrealtors.com/api/v1/get_properties");
       setProperties(res.data.data);
       setFilteredProperties(res.data.data);
     } catch (error) {
