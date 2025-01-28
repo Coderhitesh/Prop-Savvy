@@ -4,10 +4,10 @@ import Layout from "@/components/Layout";
 
 
 export const metadata = {
-  title: 'this is home page',
-  description: 'home page description',
+  title: 'Prop Savvy Realtors',
+  description: 'Welcome to Prop Savvy Realtors - Your Trusted Partner in Real Estate',
 }
-
+  
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

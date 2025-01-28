@@ -137,7 +137,7 @@ const SingleProperty = ({ slug }) => {
                                 </div>
                                 <div className="text-right">
                                     <div className="text-3xl font-bold text-gray-900">
-                                        ${property.startingPrice}
+                                        Rs.{property.startingPrice}
                                     </div>
                                     <div className="flex items-center gap-1 text-amber-500 justify-end mt-1">
                                         <Star className="w-5 h-5 fill-current" />

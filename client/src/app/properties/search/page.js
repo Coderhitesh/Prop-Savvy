@@ -2,7 +2,7 @@
 import SearchProperty from "@/components/SearchProperty";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 const page = () => {
   const searchParams = useSearchParams();
@@ -28,7 +28,9 @@ const page = () => {
 
   return (
     <>
-      <SearchProperty properties={properties} />
+      <Suspense fallback={<div>Loading...</div>} >
+        <SearchProperty properties={properties} />
+      </Suspense>
     </>
   );
 };
