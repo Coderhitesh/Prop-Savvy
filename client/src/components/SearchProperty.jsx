@@ -2,8 +2,30 @@
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 import { ArrowRight, MapPin, Star } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const SearchProperty = ({ properties }) => {
+const SearchProperty = () => {
+
+  const searchParams = useSearchParams();
+  const location = searchParams.get("location");
+  const type = searchParams.get("type");
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(
+          `https://api.propsavvyrealtors.com/api/v1/get_property_by_location?location=${location}&type=${type}`
+        );
+        setProperties(data.data);
+      } catch (error) {
+        console.log("Internal server error", error);
+      }
+    }
+    )();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -13,7 +35,7 @@ const SearchProperty = ({ properties }) => {
             Find Your Perfect Property
           </h1>
 
-         
+
           <div className="max-w-4xl mx-auto relative">
             <div className="flex items-center bg-white rounded-full shadow-lg p-2">
               <input
