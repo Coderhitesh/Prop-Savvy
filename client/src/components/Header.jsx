@@ -82,10 +82,10 @@ function Header() {
                         <Link href="/properties" className="mobile-nav-link py-2 border-b border-gray-200">
                             Properties
                         </Link>
-                        <Link href="/agents" className="mobile-nav-link py-2 border-b border-gray-200">
-                            Our Agents
+                        <Link href="/blogs" className="mobile-nav-link py-2 border-b border-gray-200">
+                            Blogs
                         </Link>
-                        <Link href="/about" className="mobile-nav-link py-2 border-b border-gray-200">
+                        <Link href="/about-us" className="mobile-nav-link py-2 border-b border-gray-200">
                             About Us
                         </Link>
                         <Link href="/contact" className="mobile-nav-link py-2 border-b border-gray-200">
