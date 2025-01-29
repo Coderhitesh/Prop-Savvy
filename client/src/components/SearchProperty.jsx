@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const SearchProperty = () => {
 
