@@ -1,10 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Building2, MapPin, Bed, Bath, ArrowRight, Star, Heart, Share2, Square } from 'lucide-react';
+import { Building2, MapPin, ArrowRight, Star} from 'lucide-react';
 import axios from 'axios'
 import Link from 'next/link';
 
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * Renders the top rated properties on the home page
+ *
+ * @returns {JSX.Element}
+ */
+/******  0dd62f0b-2d5c-4ded-8e00-9b2125ed206e  *******/
 const TopRatedHome = () => {
   const [isClient, setIsClient] = useState(false);
   const [properties,setProperties] = useState([])

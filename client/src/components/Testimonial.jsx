@@ -3,7 +3,7 @@
 import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-import { Star, Quote} from "lucide-react";
+import { Star} from "lucide-react";
 
 const testimonials = [
   {

@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, User, ArrowRight, Search, Clock } from 'lucide-react';
 import axios from 'axios';
+import Link from 'next/link';
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -116,13 +117,13 @@ const Blogs = () => {
                                     ></div>
 
 
-                                    <a
+                                    <Link
                                         href={`/blogs/${blog.slug}`}
                                         className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                                     >
                                         Read More
                                         <ArrowRight className="ml-2 w-4 h-4" />
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 <div className="px-6 pb-4">
