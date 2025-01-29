@@ -22,7 +22,7 @@ function Header() {
                     <div className="flex items-center gap-4">
                         <a href="tel:+1234567890" className="hover:text-slate-300 flex items-center gap-1">
                             <Phone className="w-4 h-4" />
-                            <span>(123) 456-7890</span>
+                            <span>+91 9354570057</span>
                         </a>
                     </div>
                 </div>

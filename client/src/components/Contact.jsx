@@ -17,10 +17,10 @@ const Contact = () => {
         e.preventDefault();
         // console.log(formData);
         try {
-            const res = await axios.post('https://api.propsavvyrealtors.com/api/v1/create_inquery',formData)
+            const res = await axios.post('https://api.propsavvyrealtors.com/api/v1/create_inquery', formData)
             toast.success(res.data.message)
         } catch (error) {
-            console.log("Internal server error",error)
+            console.log("Internal server error", error)
             toast.error(error?.response?.data?.message || 'Internal server error. Please try again.')
         }
     };
@@ -61,7 +61,7 @@ const Contact = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium text-gray-900">Email</p>
-                                        <p className="text-sm text-gray-600 mt-1">contact@example.com</p>
+                                        <p className="text-sm text-gray-600 mt-1">propsavvyrealtors@gmail.com</p>
                                     </div>
                                 </div>
 
@@ -73,7 +73,7 @@ const Contact = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium text-gray-900">Phone</p>
-                                        <p className="text-sm text-gray-600 mt-1">+1 (555) 123-4567</p>
+                                        <p className="text-sm text-gray-600 mt-1">+91 9354570057</p>
                                     </div>
                                 </div>
 
@@ -86,8 +86,7 @@ const Contact = () => {
                                     <div>
                                         <p className="text-sm font-medium text-gray-900">Address</p>
                                         <p className="text-sm text-gray-600 mt-1">
-                                            123 Business Street<br />
-                                            New York, NY 10001
+                                            Tower A, Unit No.335, 3rd Floor, Spaze I-Tech Park, Sohna Road, Sector-49, Gurugram 122018
                                         </p>
                                     </div>
                                 </div>
@@ -150,7 +149,7 @@ const Contact = () => {
 
                                 <div>
                                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                                    Phone
+                                        Phone
                                     </label>
                                     <input
                                         type="text"
@@ -197,14 +196,20 @@ const Contact = () => {
                 {/* Map Section */}
                 <div className="mt-16">
                     <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <iframe
+                        {/* <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.25436351647!2d-74.11976373946229!3d40.69766374934027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1696000000000!5m2!1sen!2sus"
                             className="w-full h-[400px]"
                             allowFullScreen=""
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
                             title="Location Map"
-                        />
+                        /> */}
+
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509.1983346697048!2d77.04039547374204!3d28.413271694007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d229aeba0bcbb%3A0xc7c82ac32b24b289!2sSPAZE%20ITECH%20PARK%2C%20Sector%2049%2C%20Gurugram%2C%20Haryana%20122018!5e0!3m2!1sen!2sin!4v1738176585370!5m2!1sen!2sin" className="w-full h-[400px]"
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Location Map"></iframe>
                     </div>
                 </div>
             </div>

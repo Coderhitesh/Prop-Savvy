@@ -113,21 +113,21 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Contact Us</h3>
             <ul className="space-y-4">
               <li>
-                <a href="#" className="text-gray-600 hover:text-primary flex items-center gap-3">
+                <a className="text-gray-600 hover:text-primary flex items-center gap-3">
                   <MapPin className="h-5 w-5 text-primary/80" />
-                  <span>123 Property Lane, Real Estate City, 12345</span>
+                  <span>Tower A, Unit No.335, 3rd Floor, Spaze I-Tech Park, Sohna Road, Sector-49, Gurugram 122018</span>
                 </a>
               </li>
               <li>
-                <a href="tel:+1234567890" className="text-gray-600 hover:text-primary flex items-center gap-3">
+                <a href="tel:+91 9354570057" className="text-gray-600 hover:text-primary flex items-center gap-3">
                   <Phone className="h-5 w-5 text-primary/80" />
-                  <span>+1 (234) 567-890</span>
+                  <span>+91 9354570057</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@propsavvy.com" className="text-gray-600 hover:text-primary flex items-center gap-3">
+                <a href="mailto:propsavvyrealtors@gmail.com" className="text-gray-600 hover:text-primary flex items-center gap-3">
                   <Mail className="h-5 w-5 text-primary/80" />
-                  <span>info@propsavvy.com</span>
+                  <span>propsavvyrealtors@gmail.com</span>
                 </a>
               </li>
               <li className="flex items-center gap-3">
