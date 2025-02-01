@@ -3,7 +3,6 @@
 import React from 'react';
 import {
   Facebook,
-  Twitter,
   Instagram,
   Linkedin,
   Mail,
@@ -11,7 +10,8 @@ import {
   MapPin,
   Clock,
   ArrowRight,
-  Building2
+  Building2,
+  Youtube
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -36,16 +36,16 @@ const Footer = () => {
               Your trusted partner in real estate, making property dreams come true with expertise and dedication.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <a href="https://www.facebook.com/people/Prop-Savvy-Realtors/61563832266689/" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-                <Twitter className="h-5 w-5" />
+              <a href="https://www.youtube.com/@PropSavvyRealtors" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
+                <Youtube className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/propsavvyrealtors/" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <a href="https://www.linkedin.com/company/propsavvyrealtors/" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -105,6 +105,13 @@ const Footer = () => {
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 Blog
               </Link>
+              <Link
+                href="/privacy-policy"
+                className="text-gray-600 hover:text-primary flex items-center gap-2 group"
+              >
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Privacy Policy
+              </Link>
             </ul>
           </div>
 
@@ -114,7 +121,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li>
                 <a className="text-gray-600 hover:text-primary flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-primary/80" />
+                  <MapPin className="h-10 w-14 text-primary/80" />
                   <span>Tower A, Unit No.335, 3rd Floor, Spaze I-Tech Park, Sohna Road, Sector-49, Gurugram 122018</span>
                 </a>
               </li>
@@ -128,6 +135,12 @@ const Footer = () => {
                 <a href="mailto:propsavvyrealtors@gmail.com" className="text-gray-600 hover:text-primary flex items-center gap-3">
                   <Mail className="h-5 w-5 text-primary/80" />
                   <span>propsavvyrealtors@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:info@propsavvyrealtors.com" className="text-gray-600 hover:text-primary flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-primary/80" />
+                  <span>info@propsavvyrealtors.com </span>
                 </a>
               </li>
               <li className="flex items-center gap-3">

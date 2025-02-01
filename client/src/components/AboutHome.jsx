@@ -83,9 +83,9 @@ function AboutHome() {
                 Your Trusted Partner in Real Estate Excellence
               </h3>
               <p className="text-gray-600">
-                At Prop Savvy Realtors, we combine industry expertise with personalized service to deliver exceptional real estate experiences. Our commitment to excellence and client satisfaction has made us a leading name in the property market.
+                Prop Savvy Realtors provides the full service related to property development and management. We deals with sales, design development, construction. If you're looking for more specific information or have a particular query about Prop Savvy Realtors, feel free to ask!
               </p>
-              
+
               {/* Features Grid */}
               <div className="grid grid-cols-2 gap-6 mt-8">
                 <div className="flex items-start gap-3">
