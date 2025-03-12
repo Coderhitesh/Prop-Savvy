@@ -35,7 +35,7 @@ function AllBlogs() {
     const handleDeleteBanner = async (id) => {
         setLoading(true);
         try {
-            await axios.delete(`https://api.propsavvyrealtors.com/api/v1/delete-blog/${id}`);
+            await axios.delete(`https://api.propsavvyrealtors.com/api/v1/delete_blog/${id}`);
             setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
             toast.success('Blog deleted successfully!');
         } catch (error) {

@@ -5,7 +5,7 @@ const fs = require('fs').promises;
 exports.createBlog = async (req, res) => {
     const uploadedImages = [];
     try {
-        const { title, content,MetaTitle,MetaDescription,MetaKeywords } = req.body;
+        const { title, content, MetaTitle, MetaDescription, MetaKeywords } = req.body;
         if (!title) {
             return res.status(400).json({ message: "Title is required" });
         }
@@ -33,7 +33,7 @@ exports.createBlog = async (req, res) => {
             content,
             MetaTitle,
             MetaDescription,
-            MetaKeywords 
+            MetaKeywords
         });
 
         if (req.files) {
@@ -81,7 +81,7 @@ exports.createBlog = async (req, res) => {
         }
 
         const blogSave = await blog.save();
-        if(!blogSave){
+        if (!blogSave) {
             for (let public_id of uploadedImages) {
                 await deleteImageFromCloudinary(public_id);
             }
@@ -183,7 +183,7 @@ exports.deleteBlog = async (req, res) => {
 exports.updateBlog = async (req, res) => {
     const uploadedImages = [];
     try {
-        const { title, content,MetaTitle,MetaDescription,MetaKeywords  } = req.body;
+        const { title, content, MetaTitle, MetaDescription, MetaKeywords } = req.body;
         const { id } = req.params;
 
         if (!id) {
