@@ -17,6 +17,7 @@ const Banner = () => {
   const handleSearchChange = (e) => {
     setSearch({ ...search, [e.target.name]: e.target.value });
   };
+
   
 
   const fetchBanner = async () => {
@@ -59,7 +60,7 @@ const Banner = () => {
           <div key={index}>
             {/* Background Image with Overlay */}
             <div
-              
+
               className="absolute inset-0 z-0"
               style={{
                 backgroundImage: `url(${item?.image?.url})`,
