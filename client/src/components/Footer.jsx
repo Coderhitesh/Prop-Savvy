@@ -39,14 +39,14 @@ const Footer = () => {
               <a href="https://www.facebook.com/people/Prop-Savvy-Realtors/61563832266689/" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="https://www.youtube.com/@PropSavvyRealtors" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
-                <Youtube className="h-5 w-5" />
-              </a>
               <a href="https://www.instagram.com/propsavvyrealtors/" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
               <a href="https://www.linkedin.com/company/propsavvyrealtors/" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
                 <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="https://www.youtube.com/@PropSavvyRealtors" target='_blank' className="text-gray-400 hover:text-primary transition-colors">
+                <Youtube className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -145,7 +145,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Clock className="h-5 w-5 text-primary/80" />
-                <span className="text-gray-600">Mon - Fri: 9:00 AM - 6:00 PM</span>
+                <span className="text-gray-600">Mon - Sun: 10:00 AM - 7:00 PM</span>
               </li>
             </ul>
           </div>

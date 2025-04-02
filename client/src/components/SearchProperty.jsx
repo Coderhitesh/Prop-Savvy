@@ -17,7 +17,7 @@ const SearchProperty = () => {
     (async () => {
       try {
         const { data } = await axios.get(
-          `https://api.propsavvyrealtors.com/api/v1/get_property_by_location?location=${location}&type=${type}`
+          `http://localhost:8000/api/v1/get_property_by_location?location=${location}&type=${type}`
         );
         setProperties(data.data);
       } catch (error) {

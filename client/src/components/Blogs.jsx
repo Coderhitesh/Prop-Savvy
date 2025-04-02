@@ -17,7 +17,7 @@ const Blogs = () => {
 
     const fetchBlogs = async () => {
         try {
-            const response = await axios.get('https://api.propsavvyrealtors.com/api/v1/get_blogs');
+            const response = await axios.get('http://localhost:8000/api/v1/get_blogs');
             const data = response.data.data;
             //   const data = await response.json();
             setBlogs(data);

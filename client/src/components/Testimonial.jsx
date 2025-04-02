@@ -7,34 +7,34 @@ import { Star} from "lucide-react";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
+    name: "Sonu",
     role: "Homeowner",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop",
+      "https://img.freepik.com/free-photo/cheerful-indian-businessman-smiling-closeup-portrait-jobs-career-campaign_53876-129416.jpg",
     content:
       "Prop Savvy Realtors made my dream of owning a home a reality. Their expertise and dedication throughout the entire process was exceptional. I couldn't be happier with my new home!",
     rating: 5,
-    location: "Beverly Hills, CA",
+    // location: "Beverly Hills, CA",
   },
   {
-    name: "Michael Chen",
+    name: "Shivang",
     role: "Property Investor",
     image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&h=200&auto=format&fit=crop",
+      "https://img.freepik.com/free-photo/closeup-young-hispanic-man-casuals-studio_662251-600.jpg",
     content:
       "As an investor, I appreciate their market knowledge and professional approach. They helped me find properties with great potential and handled everything seamlessly.",
     rating: 5,
-    location: "Manhattan, NY",
+    // location: "Manhattan, NY",
   },
   {
-    name: "Emily Rodriguez",
+    name: "Ritik",
     role: "First-time Buyer",
     image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&h=200&auto=format&fit=crop",
+      "https://img.freepik.com/free-photo/indian-business-man-with-crossed-arm-dark-wall_231208-2667.jpg?t=st=1743530904~exp=1743534504~hmac=14f9549fdb9551e864006e7ddbc0df9e7338385845f91770914f32abb16848d3&w=1380",
     content:
       "The team at Prop Savvy Realtors went above and beyond to help me find my first home. Their patience and guidance made the process stress-free and enjoyable.",
     rating: 5,
-    location: "Miami, FL",
+    // location: "Miami, FL",
   },
 ];
 
@@ -88,9 +88,9 @@ const Testimonial = () => {
                           alt={testimonial.name}
                           className="w-24 h-24 md:w-32 md:h-32 rounded-2xl object-cover shadow-lg"
                         />
-                        <div className="absolute -bottom-3 -right-3 bg-primary text-white px-4 py-1 rounded-full text-sm">
+                        {/* <div className="absolute -bottom-3 -right-3 bg-primary text-white px-4 py-1 rounded-full text-sm">
                           {testimonial.location}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
 
