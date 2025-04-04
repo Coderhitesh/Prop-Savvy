@@ -18,7 +18,7 @@ const ContactHome = () => {
     // Handle form submission
     // console.log('Form submitted:', formData);
     try {
-      const res = await axios.post('http://localhost:8000/api/v1/create_inquery',formData)
+      const res = await axios.post('https://www.api.propsavvyrealtors.com/api/v1/create_inquery',formData)
       toast.success(res.data.message)
       setFormData({
         name: '',

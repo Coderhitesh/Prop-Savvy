@@ -18,7 +18,7 @@ const SingleProperty = ({ slug }) => {
   const fetchProperty = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/get_property_slug/${slug}`
+        `https://www.api.propsavvyrealtors.com/api/v1/get_property_slug/${slug}`
       );
       // console.log("data.data",data.data)
       setProperty(data.data);
@@ -55,7 +55,7 @@ const SingleProperty = ({ slug }) => {
       console.log("Form submitted:", propertyData);
 
       const { data } = await axios.post(
-        "http://localhost:8000/api/v1/create_property_inquery",
+        "https://www.api.propsavvyrealtors.com/api/v1/create_property_inquery",
         propertyData
       );
 

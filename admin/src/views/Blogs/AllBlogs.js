@@ -22,7 +22,7 @@ function AllBlogs() {
     const handleFetchBanner = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('http://localhost:8000/api/v1/get_blogs');
+            const { data } = await axios.get('https://www.api.propsavvyrealtors.com/api/v1/get_blogs');
             setBanners(data.data || []); // Ensure default empty array
         } catch (error) {
             console.error('Error fetching blogs:', error);
@@ -35,7 +35,7 @@ function AllBlogs() {
     const handleDeleteBanner = async (id) => {
         setLoading(true);
         try {
-            await axios.delete(`http://localhost:8000/api/v1/delete_blog/${id}`);
+            await axios.delete(`https://www.api.propsavvyrealtors.com/api/v1/delete_blog/${id}`);
             setBanners((prevBanners) => prevBanners.filter((banner) => banner._id !== id));
             toast.success('Blog deleted successfully!');
         } catch (error) {
@@ -105,15 +105,15 @@ function AllBlogs() {
                                 </CTableDataCell>
                                 <CTableDataCell>{item.title}</CTableDataCell>
                                 <CTableDataCell>
-  <p
-    dangerouslySetInnerHTML={{
-      __html: item.content
-        .split(" ")
-        .slice(0, 8)
-        .join(" ") + (item.content.split(" ").length > 8 ? "..." : ""),
-    }}
-  />
-</CTableDataCell>
+                                    <p
+                                        dangerouslySetInnerHTML={{
+                                            __html: item.content
+                                                .split(" ")
+                                                .slice(0, 8)
+                                                .join(" ") + (item.content.split(" ").length > 8 ? "..." : ""),
+                                        }}
+                                    />
+                                </CTableDataCell>
                                 <CTableDataCell>
                                     <div className="action-parent">
                                         <CNavLink href={`#/blogs/edit_blogs/${item._id}`} className='edit'>

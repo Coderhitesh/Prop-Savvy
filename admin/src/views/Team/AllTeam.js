@@ -1,60 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     CTableDataCell,
     CTableRow,
     CSpinner,
     CPagination,
     CPaginationItem,
-    CNavLink,
 } from '@coreui/react';
 import Table from '../../components/Table/Table';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
-const AllProperty = () => {
-    const [properties, setProperties] = useState([]);
+const AllTeam = () => {
+    const [teamMembers, setTeamMembers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    // Fetch all properties
-    const fetchProperties = async () => {
-        setLoading(true);
-        try {
-            const { data } = await axios.get('https://www.api.propsavvyrealtors.com/api/v1/get_properties');
-            setProperties(data.data); // Assuming data is returned in the `data` field
-        } catch (error) {
-            console.error('Error fetching properties:', error);
-            toast.error('Failed to load properties. Please try again later.');
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchProperties();
+        fetchTeamMembers();
     }, []);
 
-    // Delete property
-    const handleDeleteProperty = async (id, publicId) => {
+    const fetchTeamMembers = async () => {
+        setLoading(true);
         try {
-            setLoading(true);
-            await axios.delete(`https://www.api.propsavvyrealtors.com/api/v1/delete_property/${id}`, {
-                data: { publicId },
-            });
-            setProperties((prev) => prev.filter((property) => property._id !== id));
-            toast.success('Property deleted successfully');
+            const { data } = await axios.get('https://www.api.propsavvyrealtors.com/api/v1/get_teams');
+            setTeamMembers(data.data || []);
         } catch (error) {
-            console.error('Error deleting property:', error);
-            toast.error(error?.response?.data?.message || 'Please try again later');
+            console.error('Error fetching team members:', error);
+            toast.error('Failed to load team members. Please try again.');
         } finally {
             setLoading(false);
         }
     };
 
-    // Confirm delete
-    const confirmDelete = (id, publicId) => {
+    const handleDeleteMember = async (id) => {
+        setLoading(true);
+        try {
+            await axios.delete(`https://www.api.propsavvyrealtors.com/api/v1/delete_team/${id}`);
+            setTeamMembers((prevMembers) => prevMembers.filter((member) => member._id !== id));
+            toast.success('Team member deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting team member:', error);
+            toast.error('Failed to delete the team member. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const confirmDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
             text: 'This action cannot be undone!',
@@ -62,25 +56,21 @@ const AllProperty = () => {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                handleDeleteProperty(id, publicId);
+                handleDeleteMember(id);
             }
         });
     };
 
-    // Pagination calculations
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = properties.slice(startIndex, startIndex + itemsPerPage);
-    const totalPages = Math.ceil(properties.length / itemsPerPage);
+    const currentData = teamMembers.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(teamMembers.length / itemsPerPage);
 
-    // Handle page change
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+    const handlePageChange = (page) => setCurrentPage(page);
 
-    const tableHeading = ['S.No', 'Property Name', 'Location', 'Price', 'Actions'];
+    const heading = ['S.No', 'Name', 'Position', 'Image', 'Action'];
 
     return (
         <>
@@ -90,27 +80,22 @@ const AllProperty = () => {
                 </div>
             ) : (
                 <Table
-                    heading="All Properties"
-                    btnText="Add Property"
-                    btnURL="/property/add-property"
-                    tableHeading={tableHeading}
+                    heading="All Team Members"
+                    btnText="Add Member"
+                    btnURL="/team/add_team"
+                    tableHeading={heading}
                     tableContent={
-                        currentData &&
-                        currentData.map((item, index) => (
-                            <CTableRow key={item._id}>
+                        currentData.map((member, index) => (
+                            <CTableRow key={member._id}>
                                 <CTableDataCell>{startIndex + index + 1}</CTableDataCell>
-                                <CTableDataCell className="table-text">{item.name}</CTableDataCell>
-                                <CTableDataCell>{item.location?.name || 'N/A'}</CTableDataCell>
-                                <CTableDataCell>{`₹${item.startingPrice}`}</CTableDataCell>
+                                <CTableDataCell>{member.name}</CTableDataCell>
+                                <CTableDataCell>{member.position}</CTableDataCell>
+                                <CTableDataCell>
+                                    <img src={member.image.url} alt={member.name} width={100} />
+                                </CTableDataCell>
                                 <CTableDataCell>
                                     <div className="action-parent">
-                                        <CNavLink href={`#/property/edit-property/${item._id}`} className="edit">
-                                            <i className="ri-pencil-fill"></i>
-                                        </CNavLink>
-                                        <div
-                                            className="delete"
-                                            onClick={() => confirmDelete(item._id, item.image?.public_id)}
-                                        >
+                                        <div className="delete" onClick={() => confirmDelete(member._id)}>
                                             <i className="ri-delete-bin-fill"></i>
                                         </div>
                                     </div>
@@ -119,7 +104,7 @@ const AllProperty = () => {
                         ))
                     }
                     pagination={
-                        <CPagination className="justify-content-center" aria-label="Page navigation example">
+                        <CPagination className="justify-content-center">
                             <CPaginationItem
                                 disabled={currentPage === 1}
                                 onClick={() => handlePageChange(currentPage - 1)}
@@ -149,4 +134,4 @@ const AllProperty = () => {
     );
 };
 
-export default AllProperty;
+export default AllTeam;

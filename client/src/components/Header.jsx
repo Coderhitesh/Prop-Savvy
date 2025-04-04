@@ -1,17 +1,31 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, X, Phone, } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 // import logo from '@//logo.jpg'
 import siteLogo from '/public/logo.jpg';
+import PopUpForm from './PopUpForm';
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    const [showPopup, setShowPopup] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setShowPopup(true);
+        }, 10000); // 10 seconds
+
+        return () => clearInterval(interval); // Cleanup on unmount
+    }, []);
+
+    const handleOpenPopUp = () => setShowPopup(true);
+    const handleClosePopUp = () => setShowPopup(false);
 
     return (
         <header className="w-full bg-white shadow-md sticky top-0 left-0 right-0 z-50">
@@ -33,14 +47,14 @@ function Header() {
                 <div className="flex items-center justify-between">
                     {/* Logo */}
                     <Link href={'/'} className="flex items-center space-x-2">
-                        <Image 
-                        width={100}
-                        height={100}
-                        src={siteLogo} 
-                        priority={true}
-                        className='w-full' 
-                        alt='Prop Savvy Realtors'
-                         />
+                        <Image
+                            width={100}
+                            height={100}
+                            src={siteLogo}
+                            priority={true}
+                            className='w-full'
+                            alt='Prop Savvy Realtors'
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -60,6 +74,9 @@ function Header() {
                         <Link href="/contact" className="nav-link">
                             Contact
                         </Link>
+                        <a onClick={handleOpenPopUp} className="nav-link bg-[#0F172A] text-white py-2 px-4 rounded-sm">
+                            Get Quote
+                        </a>
                     </nav>
 
 
@@ -94,6 +111,7 @@ function Header() {
                     </nav>
                 </div>
             )}
+            <PopUpForm isOpen={showPopup} onClose={handleClosePopUp} />
 
         </header>
     );

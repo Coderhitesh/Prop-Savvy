@@ -3,6 +3,7 @@
 import React from 'react';
 import { Building2, Award, Users, Target, ArrowUpRight, Clock, Shield, Globe2 } from 'lucide-react';
 import Link from 'next/link';
+import Team from './Team';
 
 function AboutHome() {
   return (
@@ -153,6 +154,7 @@ function AboutHome() {
             <p className="text-gray-600">Access to exclusive listings and luxury properties across prime locations.</p>
           </div>
         </div>
+        <Team />
       </div>
     </div>
   );

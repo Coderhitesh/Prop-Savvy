@@ -17,7 +17,7 @@ const TopRatedHome = () => {
   const [properties,setProperties] = useState([])
   const handleFetch = async() => {
     try {
-      const res = await axios.get('http://localhost:8000/api/v1/get_properties')
+      const res = await axios.get('https://www.api.propsavvyrealtors.com/api/v1/get_properties')
       setProperties(res.data.data)
     } catch (error) {
       console.log("Internal server error",error)

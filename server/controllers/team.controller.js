@@ -1,47 +1,70 @@
 const Team = require('../models/team.model');
 const { uploadImage, deleteImageFromCloudinary } = require('../Utils/Cloudnary');
-const fs = require('fs').promises;
+const fs = require('fs');
 
 exports.createTeam = async (req, res) => {
     try {
         const { name, position } = req.body;
+        
         if (!name || !position) {
             return res.status(400).json({
                 success: false,
                 message: 'Name and position are required'
             });
         }
-        const team = await Team.create({ name, position });
-        if (req.file) {
-            const imgUrl = await uploadImage(req.file.path)
-            team.image.url = imgUrl.image;
-            team.image.public_id = imgUrl.public_id;
-            try {
-                fs.unlink(req.file.path)
-            } catch (error) {
-                console.log('Error in deleting file form local storage')
-            }
-        } else {
+
+        if (!req.file) {
             return res.status(400).json({
                 success: false,
                 message: 'Please upload an image',
-            })
+            });
         }
-        await team.save();
+
+        // console.log("Image upload process started",req.file.path);
+        const imgUrl = await uploadImage(req.file.path);
+        
+        if (!imgUrl || !imgUrl.image || !imgUrl.public_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Image upload failed',
+            });
+        }
+
+        // console.log("Image uploaded successfully", imgUrl);
+
+        // Now create the team entry with the uploaded image
+        const team = await Team.create({ 
+            name, 
+            position, 
+            image: {
+                url: imgUrl.image, 
+                public_id: imgUrl.public_id 
+            }
+        });
+
+        // Delete the image from local storage after upload
+        try {
+            fs.unlinkSync(req.file.path);
+        } catch (error) {
+            console.log('Error deleting file from local storage', error);
+        }
+
         res.status(201).json({
             success: true,
             message: 'Team created successfully',
             data: team
         });
+
     } catch (error) {
-        console.log("Internal server error", error)
+        console.log("Internal server error", error);
         res.status(500).json({
             success: false,
             message: "Internal server error",
             error: error.message
-        })
+        });
     }
-}
+};
+
 
 exports.getAllTeams = async (req, res) => {
     try {

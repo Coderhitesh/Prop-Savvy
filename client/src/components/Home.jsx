@@ -5,6 +5,8 @@ import TopRatedHome from './TopRatedHome'
 import OfferBannerHome from './OfferBannerHome'
 import Testimonial from './Testimonial'
 import ContactHome from './ContactHome'
+import CompanyLogo from './CompanyLogo'
+import PopUpForm from './PopUpForm'
 
 function Home() {
   return (
@@ -14,7 +16,9 @@ function Home() {
       <TopRatedHome />
       <OfferBannerHome />
       <Testimonial />
+      <CompanyLogo />
       <ContactHome />
+      {/* <PopUpForm /> */}
     </>
   )
 }
