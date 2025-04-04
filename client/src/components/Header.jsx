@@ -17,11 +17,11 @@ function Header() {
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        // const interval = setInterval(() => {
             setShowPopup(true);
-        }, 10000); // 10 seconds
+        // }, 10000); // 10 seconds
 
-        return () => clearInterval(interval); // Cleanup on unmount
+        // return () => clearInterval(interval); // Cleanup on unmount
     }, []);
 
     const handleOpenPopUp = () => setShowPopup(true);
@@ -108,6 +108,9 @@ function Header() {
                         <Link href="/contact" className="mobile-nav-link py-2 border-b border-gray-200">
                             Contact
                         </Link>
+                        <a onClick={handleOpenPopUp} className="nav-link bg-[#0F172A] text-white py-2 px-4 rounded-sm">
+                            Get Quote
+                        </a>
                     </nav>
                 </div>
             )}
