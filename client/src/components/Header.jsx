@@ -74,7 +74,7 @@ function Header() {
                         <Link href="/contact" className="nav-link">
                             Contact
                         </Link>
-                        <a onClick={handleOpenPopUp} className="nav-link bg-[#0F172A] text-white py-2 px-4 rounded-sm">
+                        <a onClick={handleOpenPopUp} className="nav-link cursor-pointer bg-[#0F172A] text-white py-2 px-4 rounded-sm">
                             Get Quote
                         </a>
                     </nav>
@@ -108,7 +108,7 @@ function Header() {
                         <Link href="/contact" className="mobile-nav-link py-2 border-b border-gray-200">
                             Contact
                         </Link>
-                        <a onClick={handleOpenPopUp} className="nav-link bg-[#0F172A] text-white py-2 px-4 rounded-sm">
+                        <a onClick={handleOpenPopUp} className="nav-link cursor-pointer bg-[#0F172A] text-white py-2 px-4 rounded-sm">
                             Get Quote
                         </a>
                     </nav>

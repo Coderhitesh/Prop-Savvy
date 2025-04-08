@@ -87,8 +87,8 @@ const Privacy = () => {
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <Mail className="h-5 w-5 text-indigo-600" />
-                                    <a href="mailto:propsavvyrealtors@gmail.com" className="text-indigo-600 hover:text-indigo-800">
-                                        propsavvyrealtors@gmail.com
+                                    <a href="mailto:info@propsavvyrealtors.com " className="text-indigo-600 hover:text-indigo-800">
+                                        info@propsavvyrealtors.com 
                                     </a>
                                 </div>
                             </div>

@@ -14,7 +14,7 @@ function Home() {
       <Banner />
       <AboutHome />
       <TopRatedHome />
-      <OfferBannerHome />
+      {/* <OfferBannerHome /> */}
       <Testimonial />
       <CompanyLogo />
       <ContactHome />

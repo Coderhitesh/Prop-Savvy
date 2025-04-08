@@ -135,12 +135,12 @@ const Banner = () => {
                 </div>
 
                 {/* CTA Button */}
-                <div className="mt-8">
+                {/* <div className="mt-8">
                   <button className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 font-semibold group">
                     <span>View Featured Properties</span>
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

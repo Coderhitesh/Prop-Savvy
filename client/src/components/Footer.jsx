@@ -131,12 +131,12 @@ const Footer = () => {
                   <span>+91 9354570057</span>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="mailto:propsavvyrealtors@gmail.com" className="text-gray-600 hover:text-primary flex items-center gap-3">
                   <Mail className="h-5 w-5 text-primary/80" />
                   <span>propsavvyrealtors@gmail.com</span>
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="mailto:info@propsavvyrealtors.com" className="text-gray-600 hover:text-primary flex items-center gap-3">
                   <Mail className="h-5 w-5 text-primary/80" />
