@@ -194,7 +194,7 @@ const EditProperty = () => {
                     <CCol md={6}>
                         <CFormLabel htmlFor="startingPrice">Starting Price</CFormLabel>
                         <CFormInput
-                            type="number"
+                            type="text"
                             id="startingPrice"
                             name="startingPrice"
                             value={formData.startingPrice}

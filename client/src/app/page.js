@@ -1,3 +1,4 @@
+import CallToActionButton from "@/components/CallToActionButton";
 import Home from "@/components/Home";
 import PopUpForm from "@/components/PopUpForm";
 import Head from 'next/head';
@@ -10,6 +11,7 @@ export default function HomePage() {
       </Head>
       <Home />
       <PopUpForm />
+      <CallToActionButton />
     </>
   );
 }
